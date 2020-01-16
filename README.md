@@ -1,0 +1,1 @@
+## Android developer base course - Movie Searcher app
