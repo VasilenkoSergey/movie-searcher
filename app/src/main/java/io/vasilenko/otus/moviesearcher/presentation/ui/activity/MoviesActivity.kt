@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui
+package io.vasilenko.otus.moviesearcher.presentation.ui.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -15,6 +15,7 @@ import io.vasilenko.otus.moviesearcher.MovieSearcherApp.Companion.moviesPresente
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.MoviesContract
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
+import io.vasilenko.otus.moviesearcher.presentation.ui.dialog.QuitDialog
 import kotlinx.android.synthetic.main.activity_movies.*
 import kotlinx.android.synthetic.main.movie_item.view.*
 
@@ -56,6 +57,14 @@ class MoviesActivity : AppCompatActivity(),
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        val dialog = QuitDialog(this@MoviesActivity)
+        dialog.setOnCancelListener {
+            super.onBackPressed()
+        }
+        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

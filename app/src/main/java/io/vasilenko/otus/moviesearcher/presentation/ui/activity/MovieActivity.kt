@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui
+package io.vasilenko.otus.moviesearcher.presentation.ui.activity
 
 import android.app.Activity
 import android.content.Intent
