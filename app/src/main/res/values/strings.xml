@@ -8,4 +8,5 @@
     <string name="movie_invite_menu_title">invite</string>
     <string name="movie_invite_text">My new app for searching movies</string>
     <string name="movie_like_text">Like</string>
+    <string name="change_theme">change theme</string>
 </resources>

@@ -6,4 +6,9 @@
         android:icon="@drawable/movie_invite"
         android:title="@string/movie_invite_menu_title"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/theme_change"
+        android:icon="@drawable/theme_change"
+        android:title="@string/change_theme"
+        app:showAsAction="always" />
 </menu>
