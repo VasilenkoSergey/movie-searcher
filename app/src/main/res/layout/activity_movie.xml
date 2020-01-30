@@ -25,6 +25,7 @@
 
         <TextView
             android:id="@+id/movieTitle"
+            style="@style/MovieTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"
@@ -50,6 +51,7 @@
 
         <TextView
             android:id="@+id/movieDescription"
+            style="@style/MovieDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"

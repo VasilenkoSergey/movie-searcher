@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Otus Поиск Фильмов</string>
+    <string name="change_theme">изменить тему</string>
+    <string name="movie_comment_hint">Комментарий</string>
+    <string name="movie_details">Детали</string>
+    <string name="movie_invite_menu_title">Пригласить</string>
+    <string name="movie_invite_text">Мое новое приложение для поиска фильмов</string>
+    <string name="movie_like_text">Нравится</string>
+    <string name="quit_app_text">Вы действительно хотите выйти?</string>
+</resources>
