@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/quit_title"
+        android:id="@+id/quitTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -14,13 +14,13 @@
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
         android:text="@string/quit_app_text"
-        app:layout_constraintBottom_toTopOf="@id/quit_ok"
+        app:layout_constraintBottom_toTopOf="@id/quitOk"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/quit_cancel"
+        android:id="@+id/quitCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -28,10 +28,10 @@
         android:layout_marginEnd="@dimen/default_margin"
         android:text="cancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quit_title" />
+        app:layout_constraintTop_toBottomOf="@id/quitTitle" />
 
     <Button
-        android:id="@+id/quit_ok"
+        android:id="@+id/quitOk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -39,6 +39,6 @@
         android:layout_marginEnd="@dimen/default_margin"
         android:text="quit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quit_title" />
+        app:layout_constraintTop_toBottomOf="@id/quitTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
