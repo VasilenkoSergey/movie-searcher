@@ -5,10 +5,6 @@
     android:id="@+id/movieItems"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/item_movie_margin"
-    android:layout_marginTop="@dimen/item_movie_margin"
-    android:layout_marginEnd="@dimen/item_movie_margin"
-    android:layout_marginBottom="@dimen/item_movie_margin"
     android:elevation="@dimen/item_movie_elevation"
     app:cardCornerRadius="@dimen/item_movie_corner">
 

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import io.vasilenko.otus.moviesearcher.MovieSearcherApp.Companion.moviesPresenter
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.MoviesContract
+import io.vasilenko.otus.moviesearcher.presentation.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.adapter.MovieItemAdapter
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import io.vasilenko.otus.moviesearcher.presentation.ui.dialog.QuitDialog
@@ -63,6 +64,12 @@ class MoviesActivity : AppCompatActivity(), MoviesContract.View {
 
     override fun showMovies(movies: List<MovieModel>) {
         movieItemsRv.layoutManager = GridLayoutManager(this@MoviesActivity, 2)
+        val padding = resources.getDimensionPixelSize(R.dimen.default_padding)
+        movieItemsRv.addItemDecoration(
+            MovieItemDecoration(
+                padding
+            )
+        )
         movieItemsRv.adapter = MovieItemAdapter(movies) { movie -> listener(movie) }
     }
 
