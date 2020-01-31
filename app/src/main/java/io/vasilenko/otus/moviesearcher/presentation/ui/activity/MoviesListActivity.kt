@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import io.vasilenko.otus.moviesearcher.MovieSearcherApp.Companion.moviesPresenter
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.MoviesContract
-import io.vasilenko.otus.moviesearcher.presentation.adapter.MoviesListAdapter
 import io.vasilenko.otus.moviesearcher.presentation.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
+import io.vasilenko.otus.moviesearcher.presentation.ui.adapter.MoviesListAdapter
 import io.vasilenko.otus.moviesearcher.presentation.ui.dialog.QuitDialog
 import kotlinx.android.synthetic.main.activity_movies.*
 

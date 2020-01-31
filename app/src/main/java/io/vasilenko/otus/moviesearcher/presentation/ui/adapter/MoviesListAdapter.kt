@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.adapter
+package io.vasilenko.otus.moviesearcher.presentation.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
