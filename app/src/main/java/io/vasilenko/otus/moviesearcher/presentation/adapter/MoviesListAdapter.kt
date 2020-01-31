@@ -8,10 +8,10 @@ import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class MovieItemAdapter(
-    private val movies: List<MovieModel>,
-    private val listener: (MovieModel) -> Unit
-) : RecyclerView.Adapter<MovieItemAdapter.ViewHolder>() {
+class MoviesListAdapter(private val listener: (MovieModel) -> Unit) :
+    RecyclerView.Adapter<MoviesListAdapter.ViewHolder>() {
+
+    private var movies: MutableList<MovieModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
@@ -22,6 +22,11 @@ class MovieItemAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(movies[position], listener)
+    }
+
+    fun setMovies(movieItems: List<MovieModel>) {
+        movies.addAll(movieItems)
+        notifyDataSetChanged()
     }
 
     class ViewHolder(movieItemView: View) : RecyclerView.ViewHolder(movieItemView) {

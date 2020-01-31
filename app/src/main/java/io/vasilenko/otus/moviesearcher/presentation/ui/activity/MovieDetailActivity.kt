@@ -6,7 +6,7 @@ import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import kotlinx.android.synthetic.main.activity_movie.*
 
-class MovieActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
