@@ -8,4 +8,6 @@
     <string name="movie_invite_text">Мое новое приложение для поиска фильмов</string>
     <string name="movie_like_text">Нравится</string>
     <string name="quit_app_text">Вы действительно хотите выйти?</string>
+    <string name="quit">Выход</string>
+    <string name="quit_cancel">Отмена</string>
 </resources>

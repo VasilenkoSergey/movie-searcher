@@ -4,4 +4,5 @@
     <dimen name="item_movie_margin">8dp</dimen>
     <dimen name="item_movie_corner">8dp</dimen>
     <dimen name="item_movie_elevation">2dp</dimen>
+    <dimen name="default_padding">16dp</dimen>
 </resources>

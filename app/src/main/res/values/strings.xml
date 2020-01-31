@@ -10,4 +10,6 @@
     <string name="movie_like_text">Like</string>
     <string name="change_theme">change theme</string>
     <string name="quit_app_text">Are you sure you want to exit?</string>
+    <string name="quit_cancel">cancel</string>
+    <string name="quit">quit</string>
 </resources>
