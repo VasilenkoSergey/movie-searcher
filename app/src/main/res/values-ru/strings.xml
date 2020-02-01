@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Otus Поиск Фильмов</string>
-    <string name="change_theme">изменить тему</string>
+    <string name="change_theme">Изменить тему</string>
     <string name="movie_comment_hint">Комментарий</string>
     <string name="movie_details">Детали</string>
     <string name="movie_invite_menu_title">Пригласить</string>
@@ -10,4 +10,5 @@
     <string name="quit_app_text">Вы действительно хотите выйти?</string>
     <string name="quit">Выход</string>
     <string name="quit_cancel">Отмена</string>
+    <string name="favorite_movies_menu_title">Избранные фильмы</string>
 </resources>

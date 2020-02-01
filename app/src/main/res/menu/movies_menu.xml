@@ -3,12 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/movies_invite"
-        android:icon="@drawable/movie_invite"
+        android:icon="@drawable/ic_invite"
         android:title="@string/movie_invite_menu_title"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/theme_change"
-        android:icon="@drawable/theme_change"
+        android:icon="@drawable/ic_theme_change"
         android:title="@string/change_theme"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/favorite_movies"
+        android:icon="@drawable/ic_favorite_movies"
+        android:title="@string/favorite_movies_menu_title"
+        app:showAsAction="ifRoom" />
 </menu>

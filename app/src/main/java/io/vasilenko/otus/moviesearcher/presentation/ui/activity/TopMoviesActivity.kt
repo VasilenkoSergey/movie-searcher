@@ -27,6 +27,7 @@ class TopMoviesActivity : AppCompatActivity(), TopMoviesView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_movies)
+        setSupportActionBar(moviesToolBar)
         presenter = topMoviesPresenter
         presenter.attachView(this@TopMoviesActivity)
         setupViews()
