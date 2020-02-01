@@ -22,6 +22,6 @@ class TopMoviesPresenterImpl(
 
     override fun loadTopMovies() {
         val movies = movieInteractor.searchMovies()
-        view?.showMovies(mapper.mapMovieEntitiesToModels(movies))
+        view?.showTopMovies(mapper.mapMovieEntitiesToModels(movies))
     }
 }
