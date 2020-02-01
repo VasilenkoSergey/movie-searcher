@@ -1,0 +1,3 @@
+package io.vasilenko.otus.moviesearcher.presentation.view
+
+interface FavoriteMoviesView : BaseView

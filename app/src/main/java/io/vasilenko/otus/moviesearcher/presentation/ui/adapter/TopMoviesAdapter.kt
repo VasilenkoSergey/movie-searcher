@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
-import kotlinx.android.synthetic.main.item_movie.view.*
+import kotlinx.android.synthetic.main.item_top_movie.view.*
 
-class MoviesListAdapter(private val listener: (MovieModel) -> Unit) :
-    RecyclerView.Adapter<MoviesListAdapter.ViewHolder>() {
+class TopMoviesAdapter(private val listener: (MovieModel) -> Unit) :
+    RecyclerView.Adapter<TopMoviesAdapter.ViewHolder>() {
 
     private var movies: MutableList<MovieModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_top_movie, parent, false)
         return ViewHolder(v)
     }
 

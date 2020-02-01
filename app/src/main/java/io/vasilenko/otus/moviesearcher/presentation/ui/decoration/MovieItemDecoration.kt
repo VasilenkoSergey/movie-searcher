@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.decoration
+package io.vasilenko.otus.moviesearcher.presentation.ui.decoration
 
 import android.graphics.Rect
 import android.view.View

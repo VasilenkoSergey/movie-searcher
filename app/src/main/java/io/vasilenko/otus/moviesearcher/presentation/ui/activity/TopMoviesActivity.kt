@@ -8,28 +8,29 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.GridLayoutManager
-import io.vasilenko.otus.moviesearcher.MovieSearcherApp.Companion.moviesPresenter
+import io.vasilenko.otus.moviesearcher.MovieSearcherApp.Companion.topMoviesPresenter
 import io.vasilenko.otus.moviesearcher.R
-import io.vasilenko.otus.moviesearcher.presentation.MoviesContract
-import io.vasilenko.otus.moviesearcher.presentation.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
-import io.vasilenko.otus.moviesearcher.presentation.ui.adapter.MoviesListAdapter
+import io.vasilenko.otus.moviesearcher.presentation.presenter.TopMoviesPresenter
+import io.vasilenko.otus.moviesearcher.presentation.ui.adapter.TopMoviesAdapter
+import io.vasilenko.otus.moviesearcher.presentation.ui.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.ui.dialog.QuitDialog
-import kotlinx.android.synthetic.main.activity_movies.*
+import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
+import kotlinx.android.synthetic.main.activity_top_movies.*
 
-class MoviesListActivity : AppCompatActivity(), MoviesContract.View {
+class TopMoviesActivity : AppCompatActivity(), TopMoviesView {
 
-    lateinit var presenter: MoviesContract.Presenter
+    lateinit var presenter: TopMoviesPresenter
 
-    private lateinit var moviesListAdapter: MoviesListAdapter
+    private lateinit var topMoviesAdapter: TopMoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movies)
-        presenter = moviesPresenter
-        presenter.attachView(this@MoviesListActivity)
+        setContentView(R.layout.activity_top_movies)
+        presenter = topMoviesPresenter
+        presenter.attachView(this@TopMoviesActivity)
         setupViews()
-        getMovies()
+        getTopMovies()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -52,7 +53,7 @@ class MoviesListActivity : AppCompatActivity(), MoviesContract.View {
     }
 
     override fun onBackPressed() {
-        val dialog = QuitDialog(this@MoviesListActivity)
+        val dialog = QuitDialog(this@TopMoviesActivity)
         dialog.setOnCancelListener { super.onBackPressed() }
         dialog.show()
     }
@@ -62,29 +63,33 @@ class MoviesListActivity : AppCompatActivity(), MoviesContract.View {
         presenter.detachView()
     }
 
-    override fun getMovies() {
-        presenter.loadMovies()
+    override fun getTopMovies() {
+        presenter.loadTopMovies()
     }
 
-    override fun showMovies(movies: List<MovieModel>) {
-        moviesListAdapter.setMovies(movies)
+    override fun showTopMovies(movies: List<MovieModel>) {
+        topMoviesAdapter.setMovies(movies)
     }
 
     private fun setupViews() {
-        moviesListAdapter = MoviesListAdapter { movie -> listener(movie) }
+        topMoviesAdapter = TopMoviesAdapter { movie -> listener(movie) }
         movieItemsRv.layoutManager = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT ->
-                GridLayoutManager(this@MoviesListActivity, PORTRAIT_SPAN_COUNT)
+                GridLayoutManager(this@TopMoviesActivity, PORTRAIT_SPAN_COUNT)
             else ->
-                GridLayoutManager(this@MoviesListActivity, LANDSCAPE_SPAN_COUNT)
+                GridLayoutManager(this@TopMoviesActivity, LANDSCAPE_SPAN_COUNT)
         }
         val padding = resources.getDimensionPixelSize(R.dimen.default_padding)
-        movieItemsRv.addItemDecoration(MovieItemDecoration(padding))
-        movieItemsRv.adapter = moviesListAdapter
+        movieItemsRv.addItemDecoration(
+            MovieItemDecoration(
+                padding
+            )
+        )
+        movieItemsRv.adapter = topMoviesAdapter
     }
 
     private fun listener(movie: MovieModel) {
-        startActivity(Intent(this@MoviesListActivity, MovieDetailActivity::class.java).apply {
+        startActivity(Intent(this@TopMoviesActivity, MovieDetailActivity::class.java).apply {
             putExtra("movie", movie)
         })
     }

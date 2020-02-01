@@ -1,18 +1,18 @@
-package io.vasilenko.otus.moviesearcher.presentation.presenter
+package io.vasilenko.otus.moviesearcher.presentation.presenter.impl
 
 import io.vasilenko.otus.moviesearcher.domain.interaction.MovieInteractor
-import io.vasilenko.otus.moviesearcher.presentation.MoviesContract
 import io.vasilenko.otus.moviesearcher.presentation.mapper.MovieModelMapper
+import io.vasilenko.otus.moviesearcher.presentation.presenter.TopMoviesPresenter
+import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
 
-class MoviesPresenter(
+class TopMoviesPresenterImpl(
     private val movieInteractor: MovieInteractor,
     private val mapper: MovieModelMapper
-) :
-    MoviesContract.Presenter {
+) : TopMoviesPresenter {
 
-    private var view: MoviesContract.View? = null
+    private var view: TopMoviesView? = null
 
-    override fun attachView(view: MoviesContract.View) {
+    override fun attachView(view: TopMoviesView) {
         this.view = view
     }
 
@@ -20,7 +20,7 @@ class MoviesPresenter(
         view = null
     }
 
-    override fun loadMovies() {
+    override fun loadTopMovies() {
         val movies = movieInteractor.searchMovies()
         view?.showMovies(mapper.mapMovieEntitiesToModels(movies))
     }
