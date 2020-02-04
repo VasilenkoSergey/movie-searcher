@@ -1,19 +1,22 @@
 package io.vasilenko.otus.moviesearcher.presentation.presenter.impl
 
+import io.vasilenko.otus.moviesearcher.domain.interaction.MovieInteractor
+import io.vasilenko.otus.moviesearcher.presentation.mapper.MovieModelMapper
+import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import io.vasilenko.otus.moviesearcher.presentation.presenter.FavoriteMoviesPresenter
-import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
+import io.vasilenko.otus.moviesearcher.presentation.view.FavoriteMoviesView
 
-class FavoriteMoviesPresenterImpl : FavoriteMoviesPresenter {
-
-    override fun attachView(view: TopMoviesView) {
-        TODO("not implemented")
-    }
-
-    override fun detachView() {
-        TODO("not implemented")
-    }
+class FavoriteMoviesPresenterImpl(
+    private val movieInteractor: MovieInteractor,
+    private val mapper: MovieModelMapper
+) : BasePresenterImpl<FavoriteMoviesView>(), FavoriteMoviesPresenter {
 
     override fun loadFavoriteMovies() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val movies = movieInteractor.searchFavoriteMovies()
+        view?.showFavoriteMovies(mapper.mapMovieEntitiesToModels(movies))
+    }
+
+    override fun deleteFromFavorites(movie: MovieModel) {
+        movieInteractor.removeMovieFromFavorites(mapper.mapMovieModelToEntity(movie))
     }
 }

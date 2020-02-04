@@ -14,11 +14,12 @@
         <ImageView
             android:id="@+id/favoriteMovieImg"
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
             android:layout_marginBottom="@dimen/default_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/movie_godfather" />

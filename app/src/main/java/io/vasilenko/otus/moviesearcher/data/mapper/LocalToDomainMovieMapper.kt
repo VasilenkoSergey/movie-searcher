@@ -16,4 +16,8 @@ class LocalToDomainMovieMapper {
             )
         }
     }
+
+    fun mapMovieEntityToLocalMovie(movie: MovieEntity): LocalMovieDto {
+        return LocalMovieDto(movie.title, movie.description, movie.rating, movie.imgName)
+    }
 }

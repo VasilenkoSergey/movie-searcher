@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Otus Movie Searcher</string>
+    <string name="app_name">Movie Searcher</string>
     <string name="sample_movie_title">The Godfather</string>
     <string name="sample_movie_rating">8.5/10</string>
     <string name="movie_details">Вetails</string>
@@ -13,4 +13,7 @@
     <string name="quit_cancel">Cancel</string>
     <string name="quit">Quit</string>
     <string name="favorite_movies_menu_title">Favorite movies</string>
+    <string name="empty">Favorites list is empty</string>
+    <string name="added_to_favorites">Added to favorites</string>
+    <string name="already_favorite">Already in favorites</string>
 </resources>

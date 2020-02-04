@@ -1,10 +1,10 @@
 package io.vasilenko.otus.moviesearcher.presentation.presenter
 
-import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
+import io.vasilenko.otus.moviesearcher.presentation.view.BaseView
 
-interface BasePresenter {
+interface BasePresenter<V : BaseView> {
 
-    fun attachView(view: TopMoviesView)
+    fun attachView(view: V)
 
     fun detachView()
 }

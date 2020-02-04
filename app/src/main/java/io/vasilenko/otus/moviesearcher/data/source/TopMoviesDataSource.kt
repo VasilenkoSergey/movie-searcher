@@ -2,7 +2,7 @@ package io.vasilenko.otus.moviesearcher.data.source
 
 import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
 
-interface MoviesDataSource {
+interface TopMoviesDataSource {
 
-    fun getMovies(): List<MovieEntity>
+    fun getAllMovies(): List<MovieEntity>
 }

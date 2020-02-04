@@ -4,5 +4,13 @@ import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
 
 interface MovieInteractor {
 
-    fun searchMovies(): List<MovieEntity>
+    fun searchTopMovies(): List<MovieEntity>
+
+    fun searchFavoriteMovies(): List<MovieEntity>
+
+    fun isMovieFavorite(movieEntity: MovieEntity): Boolean
+
+    fun addMovieToFavorites(movieEntity: MovieEntity)
+
+    fun removeMovieFromFavorites(movieEntity: MovieEntity)
 }

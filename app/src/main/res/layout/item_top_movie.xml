@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/movieItems"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="@dimen/item_movie_elevation"
@@ -13,35 +12,32 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/movieImg"
+            android:id="@+id/topMovieImg"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/movie_godfather" />
 
         <TextView
-            android:id="@+id/movieTitle"
+            android:id="@+id/topMovieTitle"
             style="@style/MovieTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@id/movieRating"
+            app:layout_constraintBottom_toTopOf="@id/topMovieRating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movieImg"
-            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/topMovieImg"
             tools:text="@string/sample_movie_title" />
 
         <TextView
-            android:id="@+id/movieRating"
+            android:id="@+id/topMovieRating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"
@@ -51,7 +47,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movieTitle"
+            app:layout_constraintTop_toBottomOf="@id/topMovieTitle"
             tools:text="@string/sample_movie_rating" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

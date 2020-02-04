@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.GridLayoutManager
@@ -49,6 +50,10 @@ class TopMoviesActivity : AppCompatActivity(), TopMoviesView {
                 changeTheme()
                 true
             }
+            R.id.favorite_movies -> {
+                showFavorites()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -72,27 +77,50 @@ class TopMoviesActivity : AppCompatActivity(), TopMoviesView {
         topMoviesAdapter.setMovies(movies)
     }
 
+    override fun showMessageOnSuccessfulAddingToFavorites() {
+        Toast.makeText(
+            this@TopMoviesActivity,
+            getString(R.string.added_to_favorites),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    override fun showMessageIfMovieExistInFavorites() {
+        Toast.makeText(
+            this@TopMoviesActivity,
+            getString(R.string.already_favorite),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
     private fun setupViews() {
-        topMoviesAdapter = TopMoviesAdapter { movie -> listener(movie) }
-        movieItemsRv.layoutManager = when (resources.configuration.orientation) {
+        topMoviesAdapter = TopMoviesAdapter(
+            { movie -> movieOpenClickListener(movie) },
+            { movie -> movieAddToFavoriteClickListener(movie) }
+        )
+        topMoviesRv.layoutManager = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT ->
                 GridLayoutManager(this@TopMoviesActivity, PORTRAIT_SPAN_COUNT)
             else ->
                 GridLayoutManager(this@TopMoviesActivity, LANDSCAPE_SPAN_COUNT)
         }
         val padding = resources.getDimensionPixelSize(R.dimen.default_padding)
-        movieItemsRv.addItemDecoration(
+        topMoviesRv.addItemDecoration(
             MovieItemDecoration(
                 padding
             )
         )
-        movieItemsRv.adapter = topMoviesAdapter
+        topMoviesRv.adapter = topMoviesAdapter
     }
 
-    private fun listener(movie: MovieModel) {
+    private fun movieOpenClickListener(movie: MovieModel) {
         startActivity(Intent(this@TopMoviesActivity, MovieDetailActivity::class.java).apply {
             putExtra("movie", movie)
         })
+    }
+
+    private fun movieAddToFavoriteClickListener(movie: MovieModel) {
+        presenter.addMovieToFavorites(movie)
     }
 
     private fun invite() {
@@ -115,7 +143,11 @@ class TopMoviesActivity : AppCompatActivity(), TopMoviesView {
         }
     }
 
-    companion object {
+    private fun showFavorites() {
+        startActivity(Intent(this@TopMoviesActivity, FavoriteMoviesActivity::class.java))
+    }
+
+    private companion object {
         const val PORTRAIT_SPAN_COUNT = 2
         const val LANDSCAPE_SPAN_COUNT = 3
     }

@@ -7,4 +7,8 @@ interface TopMoviesView : BaseView {
     fun getTopMovies()
 
     fun showTopMovies(movies: List<MovieModel>)
+
+    fun showMessageOnSuccessfulAddingToFavorites()
+
+    fun showMessageIfMovieExistInFavorites()
 }

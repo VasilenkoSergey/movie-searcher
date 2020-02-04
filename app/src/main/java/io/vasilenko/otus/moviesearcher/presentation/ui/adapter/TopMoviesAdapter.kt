@@ -8,8 +8,10 @@ import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import kotlinx.android.synthetic.main.item_top_movie.view.*
 
-class TopMoviesAdapter(private val listener: (MovieModel) -> Unit) :
-    RecyclerView.Adapter<TopMoviesAdapter.ViewHolder>() {
+class TopMoviesAdapter(
+    private val clickListener: (MovieModel) -> Unit,
+    private val longClickListener: (MovieModel) -> Unit
+) : RecyclerView.Adapter<TopMoviesAdapter.ViewHolder>() {
 
     private var movies: MutableList<MovieModel> = mutableListOf()
 
@@ -21,7 +23,7 @@ class TopMoviesAdapter(private val listener: (MovieModel) -> Unit) :
     override fun getItemCount() = movies.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(movies[position], listener)
+        holder.bindItems(movies[position], clickListener, longClickListener)
     }
 
     fun setMovies(movieItems: List<MovieModel>) {
@@ -31,21 +33,25 @@ class TopMoviesAdapter(private val listener: (MovieModel) -> Unit) :
 
     class ViewHolder(movieItemView: View) : RecyclerView.ViewHolder(movieItemView) {
 
-        fun bindItems(movieModel: MovieModel, listener: (MovieModel) -> Unit) =
-            with(itemView) {
-                movieModel.imgId = movieImg.context.resources.getIdentifier(
-                    movieModel.imageName, "drawable", movieImg.context.packageName
-                )
-                movieTitle.text = movieModel.title
-                movieRating.text = movieModel.rating
-                movieImg.setImageResource(
-                    if (movieModel.imgId != EMPTY_RESOURCE_ID) movieModel.imgId else R.drawable.movie_default
-                )
-                setOnClickListener { listener(movieModel) }
-            }
+        fun bindItems(
+            movieModel: MovieModel,
+            clickListener: (MovieModel) -> Unit,
+            longClickListener: (MovieModel) -> Unit
+        ) = with(itemView) {
+            movieModel.imgId = topMovieImg.context.resources.getIdentifier(
+                movieModel.imageName, "drawable", topMovieImg.context.packageName
+            )
+            topMovieTitle.text = movieModel.title
+            topMovieRating.text = movieModel.rating
+            topMovieImg.setImageResource(
+                if (movieModel.imgId != EMPTY_RESOURCE_ID) movieModel.imgId else R.drawable.movie_default
+            )
+            setOnClickListener { clickListener(movieModel) }
+            setOnLongClickListener { longClickListener(movieModel); true }
+        }
     }
 
-    companion object {
+    private companion object {
         const val EMPTY_RESOURCE_ID = 0
     }
 }

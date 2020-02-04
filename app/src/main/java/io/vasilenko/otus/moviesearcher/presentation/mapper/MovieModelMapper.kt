@@ -15,4 +15,8 @@ class MovieModelMapper {
             )
         }
     }
+
+    fun mapMovieModelToEntity(movie: MovieModel): MovieEntity {
+        return MovieEntity(null, movie.title, movie.description, movie.rating, movie.imageName)
+    }
 }
