@@ -25,6 +25,8 @@ class TopMoviesActivity : AppCompatActivity(), TopMoviesView {
 
     private lateinit var topMoviesAdapter: TopMoviesAdapter
 
+    private var movieClickEnabled = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_movies)
@@ -33,6 +35,11 @@ class TopMoviesActivity : AppCompatActivity(), TopMoviesView {
         presenter.attachView(this@TopMoviesActivity)
         setupViews()
         getTopMovies()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        movieClickEnabled = true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -114,9 +121,12 @@ class TopMoviesActivity : AppCompatActivity(), TopMoviesView {
     }
 
     private fun movieOpenClickListener(movie: MovieModel) {
-        startActivity(Intent(this@TopMoviesActivity, MovieDetailActivity::class.java).apply {
-            putExtra("movie", movie)
-        })
+        if (movieClickEnabled) {
+            movieClickEnabled = false
+            startActivity(Intent(this@TopMoviesActivity, MovieDetailActivity::class.java).apply {
+                putExtra("movie", movie)
+            })
+        }
     }
 
     private fun movieAddToFavoriteClickListener(movie: MovieModel) {

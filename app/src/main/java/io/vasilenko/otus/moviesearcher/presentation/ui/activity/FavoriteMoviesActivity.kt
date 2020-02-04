@@ -23,6 +23,8 @@ class FavoriteMoviesActivity : AppCompatActivity(), FavoriteMoviesView {
 
     private lateinit var favoriteMoviesAdapter: FavoriteMoviesAdapter
 
+    private var movieClickEnabled = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite_movies)
@@ -31,6 +33,11 @@ class FavoriteMoviesActivity : AppCompatActivity(), FavoriteMoviesView {
         presenter.attachView(this@FavoriteMoviesActivity)
         setupViews()
         getFavoriteMovies()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        movieClickEnabled = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -89,9 +96,12 @@ class FavoriteMoviesActivity : AppCompatActivity(), FavoriteMoviesView {
     }
 
     private fun movieClickListener(movie: MovieModel) {
-        startActivity(Intent(this@FavoriteMoviesActivity, MovieDetailActivity::class.java).apply {
-            putExtra("movie", movie)
-        })
+        if (movieClickEnabled) {
+            movieClickEnabled = false
+            startActivity(Intent(this@FavoriteMoviesActivity, MovieDetailActivity::class.java).apply {
+                putExtra("movie", movie)
+            })
+        }
     }
 
     private fun showEmptyPlaceHolder() {
