@@ -57,12 +57,14 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         topMoviesAdapter.setMovies(movies)
     }
 
-    override fun showMessageOnSuccessfulAddingToFavorites() {
+    override fun showMessageOnSuccessfulAddingToFavorites(movie: MovieModel) {
         Snackbar.make(
             activity?.moviesContainer as View,
             getString(R.string.added_to_favorites),
             Snackbar.LENGTH_SHORT
-        ).show()
+        ).setAction(getString(R.string.cancel_add_to_favorites)){
+            presenter.deleteFromFavorites(movie)
+        }.show()
     }
 
     override fun showMessageIfMovieExistInFavorites() {

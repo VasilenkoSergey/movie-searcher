@@ -18,4 +18,5 @@
     <string name="favorite_movies_bottom_menu_title">Избранное</string>
     <string name="movies_top_toolbar_title">Топ Фильмов</string>
     <string name="movies_favorite_toolbar_title">Избранные фильмы</string>
+    <string name="cancel_add_to_favorites">Отмена</string>
 </resources>
