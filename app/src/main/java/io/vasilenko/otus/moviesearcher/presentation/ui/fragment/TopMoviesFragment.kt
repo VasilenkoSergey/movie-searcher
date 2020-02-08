@@ -14,12 +14,12 @@ import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.presenter.TopMoviesPresenter
-import io.vasilenko.otus.moviesearcher.presentation.ui.activity.MovieDetailActivity
+import io.vasilenko.otus.moviesearcher.presentation.ui.activity.MovieDetailsActivity
 import io.vasilenko.otus.moviesearcher.presentation.ui.adapter.TopMoviesAdapter
 import io.vasilenko.otus.moviesearcher.presentation.ui.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
 import kotlinx.android.synthetic.main.activity_movies.*
-import kotlinx.android.synthetic.main.activity_top_movies.*
+import kotlinx.android.synthetic.main.fragment_top_movies.*
 
 class TopMoviesFragment : Fragment(), TopMoviesView {
 
@@ -95,7 +95,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
     }
 
     private fun movieOpenClickListener(movie: MovieModel) {
-        router.onOpenActivity(Intent(requireContext(), MovieDetailActivity::class.java).apply {
+        router.onOpenActivity(Intent(requireContext(), MovieDetailsActivity::class.java).apply {
             putExtra("movie", movie)
         })
     }

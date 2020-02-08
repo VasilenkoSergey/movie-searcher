@@ -9,6 +9,7 @@ import io.vasilenko.otus.moviesearcher.MovieSearcherApp
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouterHandler
+import io.vasilenko.otus.moviesearcher.presentation.ui.dialog.QuitDialog
 import io.vasilenko.otus.moviesearcher.presentation.ui.fragment.FavoriteMoviesFragment
 import io.vasilenko.otus.moviesearcher.presentation.ui.fragment.TopMoviesFragment
 import io.vasilenko.otus.moviesearcher.presentation.view.MoviesView
@@ -27,6 +28,12 @@ class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
         if (savedInstanceState == null) {
             showTopMovies()
         }
+    }
+
+    override fun onBackPressed() {
+        val dialog = QuitDialog(this@MoviesActivity)
+        dialog.setOnCancelListener { super.onBackPressed() }
+        dialog.show()
     }
 
     override fun showTopMovies() {

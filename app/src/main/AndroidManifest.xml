@@ -17,9 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.ui.activity.MovieDetailActivity" android:launchMode="singleTop"/>
-        <activity android:name=".presentation.ui.activity.FavoriteMoviesActivity" />
-        <activity android:name=".presentation.ui.activity.TopMoviesActivity" />
+        <activity
+            android:name=".presentation.ui.activity.MovieDetailsActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
