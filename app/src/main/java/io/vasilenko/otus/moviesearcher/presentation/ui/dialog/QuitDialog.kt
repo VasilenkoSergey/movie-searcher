@@ -10,8 +10,9 @@ class QuitDialog(context: Context) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setCancelable(false)
         setContentView(R.layout.dialog_quit)
-        quit_cancel.setOnClickListener { dismiss() }
-        quit_ok.setOnClickListener { cancel() }
+        quitCancel.setOnClickListener { dismiss() }
+        quitOk.setOnClickListener { cancel() }
     }
 }

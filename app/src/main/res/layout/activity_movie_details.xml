@@ -20,7 +20,6 @@
             app:layout_constraintBottom_toTopOf="@id/movieDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
             tools:src="@drawable/movie_godfather" />
 
         <TextView
@@ -58,38 +57,10 @@
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
             android:layout_marginBottom="@dimen/default_margin"
-            app:layout_constraintBottom_toTopOf="@id/movieLike"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movieImg"
             tools:text="@string/sample_movie_description" />
-
-        <CheckBox
-            android:id="@+id/movieLike"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:text="@string/movie_like_text"
-            app:layout_constraintBottom_toTopOf="@id/movieComment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movieDescription" />
-
-        <EditText
-            android:id="@+id/movieComment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:hint="@string/movie_comment_hint"
-            android:inputType="textMultiLine"
-            android:lines="3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movieLike" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

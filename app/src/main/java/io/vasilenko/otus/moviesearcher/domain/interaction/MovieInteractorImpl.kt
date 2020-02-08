@@ -1,11 +1,31 @@
 package io.vasilenko.otus.moviesearcher.domain.interaction
 
 import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
-import io.vasilenko.otus.moviesearcher.domain.repo.MoviesRepo
+import io.vasilenko.otus.moviesearcher.domain.repo.FavoriteMoviesRepo
+import io.vasilenko.otus.moviesearcher.domain.repo.TopMoviesRepo
 
-class MovieInteractorImpl(private val moviesRepo: MoviesRepo) : MovieInteractor {
+class MovieInteractorImpl(
+    private val topMoviesRepo: TopMoviesRepo,
+    private val favoriteMoviesRepo: FavoriteMoviesRepo
+) : MovieInteractor {
 
-    override fun searchMovies(): List<MovieEntity> {
-        return moviesRepo.getAllMovies()
+    override fun searchTopMovies(): List<MovieEntity> {
+        return topMoviesRepo.getAllMovies()
+    }
+
+    override fun searchFavoriteMovies(): List<MovieEntity> {
+        return favoriteMoviesRepo.getAllMovies()
+    }
+
+    override fun isMovieFavorite(movieEntity: MovieEntity): Boolean {
+        return favoriteMoviesRepo.existMovieByEntity(movieEntity)
+    }
+
+    override fun addMovieToFavorites(movieEntity: MovieEntity) {
+        favoriteMoviesRepo.addMovie(movieEntity)
+    }
+
+    override fun removeMovieFromFavorites(movieEntity: MovieEntity) {
+        favoriteMoviesRepo.delMovie(movieEntity)
     }
 }

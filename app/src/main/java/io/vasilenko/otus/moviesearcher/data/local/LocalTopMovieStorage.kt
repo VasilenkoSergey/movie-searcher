@@ -1,6 +1,6 @@
 package io.vasilenko.otus.moviesearcher.data.local
 
-object LocalMovieStorage {
+object LocalTopMovieStorage {
 
     private const val description = """
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie. 
