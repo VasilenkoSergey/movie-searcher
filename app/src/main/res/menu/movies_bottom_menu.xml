@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/topMoviesMenu"
+        android:icon="@drawable/ic_top_movies"
+        android:title="@string/top_movies_bottom_menu_title" />
+    <item
+        android:id="@+id/favoriteMoviesMenu"
+        android:icon="@drawable/ic_favorite_movies"
+        android:title="@string/favorite_movies_bottom_menu_title" />
+</menu>
