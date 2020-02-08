@@ -16,4 +16,6 @@
     <string name="already_favorite">Уже в избранном</string>
     <string name="top_movies_bottom_menu_title">Топ</string>
     <string name="favorite_movies_bottom_menu_title">Избранное</string>
+    <string name="movies_top_toolbar_title">Список Топ Фильмов</string>
+    <string name="movies_favorite_toolbar_title">Избранные фильмы</string>
 </resources>
