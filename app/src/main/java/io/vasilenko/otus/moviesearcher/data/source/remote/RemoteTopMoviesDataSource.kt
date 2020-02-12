@@ -1,6 +1,6 @@
 package io.vasilenko.otus.moviesearcher.data.source.remote
 
-import io.vasilenko.otus.moviesearcher.data.mapper.LocalMovieMapper
+import io.vasilenko.otus.moviesearcher.data.mapper.MovieDtoMapper
 import io.vasilenko.otus.moviesearcher.data.network.RestApi
 import io.vasilenko.otus.moviesearcher.data.network.TopMoviesResultDto
 import io.vasilenko.otus.moviesearcher.data.source.TopMoviesDataSource
@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RemoteTopMoviesDataSource(private val api: RestApi, private val mapper: LocalMovieMapper) :
+class RemoteTopMoviesDataSource(private val api: RestApi, private val mapper: MovieDtoMapper) :
     TopMoviesDataSource {
 
     override fun getAllMovies(

@@ -1,11 +1,11 @@
 package io.vasilenko.otus.moviesearcher.data.source.local
 
 import io.vasilenko.otus.moviesearcher.data.local.LocalFavoriteMovieStorage
-import io.vasilenko.otus.moviesearcher.data.mapper.LocalMovieMapper
+import io.vasilenko.otus.moviesearcher.data.mapper.MovieDtoMapper
 import io.vasilenko.otus.moviesearcher.data.source.FavoritesMoviesDataSource
 import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
 
-class LocalFavoriteMoviesDataSource(private val mapper: LocalMovieMapper) :
+class LocalFavoriteMoviesDataSource(private val mapper: MovieDtoMapper) :
     FavoritesMoviesDataSource {
 
     override fun getAllMovies(): List<MovieEntity> {

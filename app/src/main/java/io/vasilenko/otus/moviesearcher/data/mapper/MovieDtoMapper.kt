@@ -4,7 +4,7 @@ import io.vasilenko.otus.moviesearcher.data.local.LocalMovieDto
 import io.vasilenko.otus.moviesearcher.data.network.MovieDto
 import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
 
-class LocalMovieMapper {
+class MovieDtoMapper {
 
     companion object {
         const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
