@@ -13,4 +13,6 @@ interface TopMoviesView : BaseView {
     fun showMessageOnSuccessfulAddingToFavorites(movie: MovieModel)
 
     fun showMessageIfMovieExistInFavorites()
+
+    fun showErrorMessage(message: String)
 }

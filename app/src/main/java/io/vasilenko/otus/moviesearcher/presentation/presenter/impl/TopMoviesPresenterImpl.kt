@@ -64,7 +64,7 @@ class TopMoviesPresenterImpl(
     }
 
     override fun onSearchFailure(t: Throwable?) {
-
+        t?.message?.let { view?.showErrorMessage(it) }
     }
 
     private companion object {

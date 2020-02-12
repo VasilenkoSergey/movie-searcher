@@ -70,7 +70,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
             activity?.moviesContainer as View,
             getString(R.string.added_to_favorites),
             Snackbar.LENGTH_SHORT
-        ).setAction(getString(R.string.cancel_add_to_favorites)){
+        ).setAction(getString(R.string.cancel_add_to_favorites)) {
             presenter.deleteFromFavorites(movie)
         }.show()
     }
@@ -79,6 +79,14 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         Snackbar.make(
             activity?.moviesContainer as View,
             getString(R.string.already_favorite),
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    override fun showErrorMessage(message: String) {
+        Snackbar.make(
+            activity?.moviesContainer as View,
+            message,
             Snackbar.LENGTH_SHORT
         ).show()
     }
