@@ -38,14 +38,14 @@ class TopMoviesAdapter(
             clickListener: (MovieModel) -> Unit,
             longClickListener: (MovieModel) -> Unit
         ) = with(itemView) {
-            movieModel.imgId = topMovieImg.context.resources.getIdentifier(
-                movieModel.imageName, "drawable", topMovieImg.context.packageName
-            )
+//            movieModel.imgId = topMovieImg.context.resources.getIdentifier(
+//                movieModel.imageName, "drawable", topMovieImg.context.packageName
+//            )
             topMovieTitle.text = movieModel.title
             topMovieRating.text = movieModel.rating
-            topMovieImg.setImageResource(
-                if (movieModel.imgId != EMPTY_RESOURCE_ID) movieModel.imgId else R.drawable.movie_default
-            )
+//            topMovieImg.setImageResource(
+//                if (movieModel.imgId != EMPTY_RESOURCE_ID) movieModel.imgId else R.drawable.movie_default
+//            )
             setOnClickListener { clickListener(movieModel) }
             setOnLongClickListener { longClickListener(movieModel); true }
         }

@@ -42,14 +42,14 @@ class FavoriteMoviesAdapter(private val clickListener: (MovieModel) -> Unit) :
 
         fun bindItems(movieModel: MovieModel, clickListener: (MovieModel) -> Unit) =
             with(itemView) {
-                movieModel.imgId = favoriteMovieImg.context.resources.getIdentifier(
-                    movieModel.imageName, "drawable", favoriteMovieImg.context.packageName
-                )
+//                movieModel.imgId = favoriteMovieImg.context.resources.getIdentifier(
+//                    movieModel.imageName, "drawable", favoriteMovieImg.context.packageName
+//                )
                 favoriteMovieTitle.text = movieModel.title
                 favoriteMovieRating.text = movieModel.rating
-                favoriteMovieImg.setImageResource(
-                    if (movieModel.imgId != EMPTY_RESOURCE_ID) movieModel.imgId else R.drawable.movie_default
-                )
+//                favoriteMovieImg.setImageResource(
+//                    if (movieModel.imgId != EMPTY_RESOURCE_ID) movieModel.imgId else R.drawable.movie_default
+//                )
                 setOnClickListener { clickListener(movieModel) }
             }
     }

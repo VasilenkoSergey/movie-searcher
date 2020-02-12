@@ -19,6 +19,6 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsView {
     override fun showMovie() {
         val movie = intent.getParcelableExtra<MovieModel>("movie")
         movieDescription.text = movie?.description
-        movie?.imgId?.let { movieImg.setImageResource(it) }
+//        movie?.imgId?.let { movieImg.setImageResource(it) }
     }
 }

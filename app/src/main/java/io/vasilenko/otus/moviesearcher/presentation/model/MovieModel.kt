@@ -8,6 +8,6 @@ data class MovieModel(
     val title: String,
     val description: String,
     val rating: String,
-    val imageName: String,
-    var imgId: Int = 0
+    var posterPath: String? = null,
+    var backdropPath: String? = null
 ) : Parcelable
