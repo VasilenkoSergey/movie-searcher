@@ -9,6 +9,7 @@ import io.vasilenko.otus.moviesearcher.data.source.local.LocalTopMoviesDataSourc
 import io.vasilenko.otus.moviesearcher.data.source.remote.RemoteTopMoviesDataSource
 import io.vasilenko.otus.moviesearcher.domain.interaction.MovieInteractorImpl
 import io.vasilenko.otus.moviesearcher.presentation.mapper.MovieModelMapper
+import io.vasilenko.otus.moviesearcher.presentation.navigation.impl.MoviesRouterImpl
 import io.vasilenko.otus.moviesearcher.presentation.presenter.impl.FavoriteMoviesPresenterImpl
 import io.vasilenko.otus.moviesearcher.presentation.presenter.impl.TopMoviesPresenterImpl
 
@@ -28,5 +29,6 @@ class MovieSearcherApp : Application() {
         private val movieModelMapper = MovieModelMapper()
         val topMoviesPresenter = TopMoviesPresenterImpl(interactor, movieModelMapper)
         val favoriteMoviesPresenter = FavoriteMoviesPresenterImpl(interactor, movieModelMapper)
+        val router = MoviesRouterImpl()
     }
 }

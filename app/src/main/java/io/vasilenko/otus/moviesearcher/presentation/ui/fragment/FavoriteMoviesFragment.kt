@@ -1,53 +1,47 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui.activity
+package io.vasilenko.otus.moviesearcher.presentation.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.vasilenko.otus.moviesearcher.MovieSearcherApp.Companion.favoriteMoviesPresenter
+import io.vasilenko.otus.moviesearcher.MovieSearcherApp
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
+import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.presenter.FavoriteMoviesPresenter
+import io.vasilenko.otus.moviesearcher.presentation.ui.activity.MovieDetailsActivity
 import io.vasilenko.otus.moviesearcher.presentation.ui.adapter.FavoriteMoviesAdapter
 import io.vasilenko.otus.moviesearcher.presentation.ui.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.view.FavoriteMoviesView
-import kotlinx.android.synthetic.main.activity_favorite_movies.*
+import kotlinx.android.synthetic.main.activity_movies.*
+import kotlinx.android.synthetic.main.fragment_favorite_movies.*
 
-class FavoriteMoviesActivity : AppCompatActivity(), FavoriteMoviesView {
+class FavoriteMoviesFragment : Fragment(), FavoriteMoviesView {
 
+    lateinit var router: MoviesRouter
     lateinit var presenter: FavoriteMoviesPresenter
-
     private lateinit var favoriteMoviesAdapter: FavoriteMoviesAdapter
 
-    private var movieClickEnabled = true
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_favorite_movies, container, false)
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_favorite_movies)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        presenter = favoriteMoviesPresenter
-        presenter.attachView(this@FavoriteMoviesActivity)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        router = MovieSearcherApp.router
+        presenter = MovieSearcherApp.favoriteMoviesPresenter
+        presenter.attachView(this@FavoriteMoviesFragment)
         setupViews()
         getFavoriteMovies()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        movieClickEnabled = true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onDestroy() {
@@ -55,9 +49,18 @@ class FavoriteMoviesActivity : AppCompatActivity(), FavoriteMoviesView {
         presenter.detachView()
     }
 
+    override fun getFavoriteMovies() {
+        presenter.loadFavoriteMovies()
+    }
+
+    override fun showFavoriteMovies(movies: List<MovieModel>) {
+        if (movies.isEmpty()) showEmptyPlaceHolder() else favoriteMoviesAdapter.setMovies(movies)
+    }
+
     private fun setupViews() {
+        activity?.moviesAppToolBarText?.text = getString(R.string.movies_favorite_toolbar_title)
         favoriteMoviesAdapter = FavoriteMoviesAdapter { movie -> movieClickListener(movie) }
-        favoriteMoviesRv.layoutManager = LinearLayoutManager(this@FavoriteMoviesActivity)
+        favoriteMoviesRv.layoutManager = LinearLayoutManager(requireContext())
         val padding = resources.getDimensionPixelSize(R.dimen.default_padding)
         favoriteMoviesRv.addItemDecoration(
             MovieItemDecoration(
@@ -87,21 +90,10 @@ class FavoriteMoviesActivity : AppCompatActivity(), FavoriteMoviesView {
         ItemTouchHelper(swipeCallback).attachToRecyclerView(favoriteMoviesRv)
     }
 
-    override fun getFavoriteMovies() {
-        presenter.loadFavoriteMovies()
-    }
-
-    override fun showFavoriteMovies(movies: List<MovieModel>) {
-        if (movies.isEmpty()) showEmptyPlaceHolder() else favoriteMoviesAdapter.setMovies(movies)
-    }
-
     private fun movieClickListener(movie: MovieModel) {
-        if (movieClickEnabled) {
-            movieClickEnabled = false
-            startActivity(Intent(this@FavoriteMoviesActivity, MovieDetailActivity::class.java).apply {
-                putExtra("movie", movie)
-            })
-        }
+        router.onOpenActivity(Intent(requireContext(), MovieDetailsActivity::class.java).apply {
+            putExtra("movie", movie)
+        })
     }
 
     private fun showEmptyPlaceHolder() {

@@ -8,4 +8,6 @@ interface TopMoviesPresenter : BasePresenter<TopMoviesView> {
     fun loadTopMovies()
 
     fun addMovieToFavorites(movieModel: MovieModel)
+
+    fun deleteFromFavorites(movie: MovieModel)
 }

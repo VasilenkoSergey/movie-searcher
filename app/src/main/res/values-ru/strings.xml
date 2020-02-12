@@ -14,4 +14,9 @@
     <string name="empty">Список избранного пуст</string>
     <string name="added_to_favorites">Добавлено в избранное</string>
     <string name="already_favorite">Уже в избранном</string>
+    <string name="top_movies_bottom_menu_title">Топ</string>
+    <string name="favorite_movies_bottom_menu_title">Избранное</string>
+    <string name="movies_top_toolbar_title">Топ Фильмов</string>
+    <string name="movies_favorite_toolbar_title">Избранные фильмы</string>
+    <string name="cancel_add_to_favorites">Отмена</string>
 </resources>

@@ -23,7 +23,11 @@ class TopMoviesPresenterImpl(
             view?.showMessageIfMovieExistInFavorites()
         } else {
             movieInteractor.addMovieToFavorites(movie)
-            view?.showMessageOnSuccessfulAddingToFavorites()
+            view?.showMessageOnSuccessfulAddingToFavorites(movieModel)
         }
+    }
+
+    override fun deleteFromFavorites(movie: MovieModel) {
+        movieInteractor.removeMovieFromFavorites(mapper.mapMovieModelToEntity(movie))
     }
 }
