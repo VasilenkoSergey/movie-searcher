@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import io.vasilenko.otus.moviesearcher.MovieSearcherApp
 import io.vasilenko.otus.moviesearcher.R
@@ -25,6 +26,9 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     lateinit var router: MoviesRouter
     lateinit var presenter: TopMoviesPresenter
+
+    private var isLoading = false
+
     private lateinit var topMoviesAdapter: TopMoviesAdapter
 
     override fun onCreateView(
@@ -41,7 +45,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         presenter = MovieSearcherApp.topMoviesPresenter
         presenter.attachView(this@TopMoviesFragment)
         setupViews()
-        getTopMovies()
+        presenter.onViewCreated()
     }
 
     override fun onDestroy() {
@@ -49,12 +53,16 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         presenter.detachView()
     }
 
-    override fun getTopMovies() {
-        presenter.loadTopMovies()
+    override fun setLoadingState(state: Boolean) {
+        isLoading = state
     }
 
     override fun showTopMovies(movies: List<MovieModel>) {
         topMoviesAdapter.setMovies(movies)
+    }
+
+    override fun updateTopMovies(movies: List<MovieModel>) {
+        topMoviesAdapter.addMovies(movies)
     }
 
     override fun showMessageOnSuccessfulAddingToFavorites(movie: MovieModel) {
@@ -94,6 +102,17 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
             )
         )
         topMoviesRv.adapter = topMoviesAdapter
+        topMoviesRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!isLoading) {
+                    val layoutManager = recyclerView.layoutManager as GridLayoutManager
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    if (lastVisibleItemPosition == topMoviesAdapter.itemCount - 1) {
+                        presenter.onScrollTopMovies()
+                    }
+                }
+            }
+        })
     }
 
     private fun movieOpenClickListener(movie: MovieModel) {

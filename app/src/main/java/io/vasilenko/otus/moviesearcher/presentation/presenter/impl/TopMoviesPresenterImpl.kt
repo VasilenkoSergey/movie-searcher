@@ -15,9 +15,24 @@ class TopMoviesPresenterImpl(
 
     private var currentPage = INITIAL_PAGE
 
+    override fun onViewCreated() {
+        loadTopMovies()
+    }
+
     override fun loadTopMovies() {
-        val movies = movieInteractor.searchTopMovies(this, currentPage)
-        view?.showTopMovies(mapper.mapMovieEntitiesToModels(movies))
+        currentPage = INITIAL_PAGE
+        view?.setLoadingState(true)
+        movieInteractor.searchTopMovies(this, currentPage)
+    }
+
+    override fun loadNextTopMovies() {
+        currentPage++
+        view?.setLoadingState(true)
+        movieInteractor.searchTopMovies(this, currentPage)
+    }
+
+    override fun onScrollTopMovies() {
+        loadNextTopMovies()
     }
 
     override fun addMovieToFavorites(movieModel: MovieModel) {
@@ -36,7 +51,12 @@ class TopMoviesPresenterImpl(
     }
 
     override fun onSearchFinished(movies: List<MovieEntity>) {
-        view?.showTopMovies(mapper.mapMovieEntitiesToModels(movies))
+        if (currentPage == INITIAL_PAGE) {
+            view?.showTopMovies(mapper.mapMovieEntitiesToModels(movies))
+        } else {
+            view?.updateTopMovies(mapper.mapMovieEntitiesToModels(movies))
+        }
+        view?.setLoadingState(false)
     }
 
     override fun onSearchFailure(t: Throwable?) {

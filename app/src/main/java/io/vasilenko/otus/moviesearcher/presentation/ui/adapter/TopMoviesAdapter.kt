@@ -28,8 +28,13 @@ class TopMoviesAdapter(
     }
 
     fun setMovies(movieItems: List<MovieModel>) {
-        movies.addAll(movieItems)
+        movies = movieItems as MutableList<MovieModel>
         notifyDataSetChanged()
+    }
+
+    fun addMovies(movieItems: List<MovieModel>) {
+        movies.addAll(movieItems)
+        notifyItemRangeInserted(movies.size - movieItems.size, movieItems.size)
     }
 
     class ViewHolder(movieItemView: View) : RecyclerView.ViewHolder(movieItemView) {
