@@ -5,5 +5,8 @@ import io.vasilenko.otus.moviesearcher.domain.interaction.MovieInteractor
 
 interface TopMoviesRepo {
 
-    fun getAllMovies(listener: MovieInteractor.TopMoviesSearchListener, page: Int): List<MovieEntity>
+    fun getAllMovies(
+        listener: MovieInteractor.TopMoviesSearchListener,
+        page: Int
+    ): List<MovieEntity>
 }

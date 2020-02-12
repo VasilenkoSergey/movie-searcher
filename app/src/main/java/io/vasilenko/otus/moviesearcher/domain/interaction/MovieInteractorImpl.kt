@@ -9,7 +9,10 @@ class MovieInteractorImpl(
     private val favoriteMoviesRepo: FavoriteMoviesRepo
 ) : MovieInteractor {
 
-    override fun searchTopMovies(listener: MovieInteractor.TopMoviesSearchListener, page: Int): List<MovieEntity> {
+    override fun searchTopMovies(
+        listener: MovieInteractor.TopMoviesSearchListener,
+        page: Int
+    ): List<MovieEntity> {
         return topMoviesRepo.getAllMovies(listener, page)
     }
 
