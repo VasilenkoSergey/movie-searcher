@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     private var isLoading = false
 
+    private lateinit var progressBar: ProgressBar
     private lateinit var topMoviesAdapter: TopMoviesAdapter
 
     override fun onCreateView(
@@ -55,6 +57,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     override fun setLoadingState(state: Boolean) {
         isLoading = state
+        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun showTopMovies(movies: List<MovieModel>) {
@@ -93,6 +96,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     private fun setupViews() {
         activity?.moviesAppToolBarText?.text = getString(R.string.movies_top_toolbar_title)
+        progressBar = topMoviesProgressBar
         topMoviesAdapter = TopMoviesAdapter(
             { movie -> movieOpenClickListener(movie) },
             { movie -> movieAddToFavoriteClickListener(movie) }
