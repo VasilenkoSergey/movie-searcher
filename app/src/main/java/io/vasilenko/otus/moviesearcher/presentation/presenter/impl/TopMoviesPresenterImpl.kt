@@ -35,6 +35,10 @@ class TopMoviesPresenterImpl(
         loadNextTopMovies()
     }
 
+    override fun onRefreshTopMovies() {
+        loadTopMovies()
+    }
+
     override fun addMovieToFavorites(movieModel: MovieModel) {
         val movie = mapper.mapMovieModelToEntity(movieModel)
         val isFavorite = movieInteractor.isMovieFavorite(movie)

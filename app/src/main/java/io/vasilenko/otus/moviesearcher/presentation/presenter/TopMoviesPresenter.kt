@@ -13,6 +13,8 @@ interface TopMoviesPresenter : BasePresenter<TopMoviesView> {
 
     fun onScrollTopMovies()
 
+    fun onRefreshTopMovies()
+
     fun addMovieToFavorites(movieModel: MovieModel)
 
     fun deleteFromFavorites(movie: MovieModel)

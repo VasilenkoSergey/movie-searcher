@@ -113,6 +113,10 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
                 }
             }
         })
+        topMoviesSwipeRefresh.setOnRefreshListener {
+            presenter.onRefreshTopMovies()
+            topMoviesSwipeRefresh.isRefreshing = false
+        }
     }
 
     private fun movieOpenClickListener(movie: MovieModel) {
