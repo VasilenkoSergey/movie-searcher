@@ -10,8 +10,10 @@ class TopMoviesRepoImpl(
     private val topMoviesRemoteDataSource: TopMoviesDataSource
 ) : TopMoviesRepo {
 
-    override fun getAllMovies(listener: MovieInteractor.TopMoviesSearchListener, page: Int): List<MovieEntity> {
-//        return topMoviesLocalDataSource.getAllMovies(listener, page)
+    override fun getAllMovies(
+        listener: MovieInteractor.TopMoviesSearchListener,
+        page: Int
+    ): List<MovieEntity> {
         return topMoviesRemoteDataSource.getAllMovies(listener, page)
     }
 }
