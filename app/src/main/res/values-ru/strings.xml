@@ -19,4 +19,8 @@
     <string name="movies_top_toolbar_title">Топ Фильмов</string>
     <string name="movies_favorite_toolbar_title">Избранные фильмы</string>
     <string name="cancel_add_to_favorites">Отмена</string>
+    <string name="sample_movie_rating">8.5</string>
+    <string name="sample_movie_title">Название</string>
+    <string name="sample_toolbar_title">Название</string>
+    <string name="sample_movie_description">Описание</string>
 </resources>

@@ -19,10 +19,11 @@
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
             android:layout_marginBottom="@dimen/default_margin"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/movie_godfather" />
+            tools:src="@drawable/ic_movie_default" />
 
         <TextView
             android:id="@+id/favoriteMovieTitle"
