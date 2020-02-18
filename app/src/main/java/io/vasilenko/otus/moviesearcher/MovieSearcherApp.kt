@@ -1,7 +1,8 @@
 package io.vasilenko.otus.moviesearcher
 
 import android.app.Application
-import io.vasilenko.otus.moviesearcher.data.mapper.LocalMovieMapper
+import io.vasilenko.otus.moviesearcher.data.mapper.MovieDtoMapper
+import io.vasilenko.otus.moviesearcher.data.network.NetworkProvider
 import io.vasilenko.otus.moviesearcher.data.repo.FavoriteMoviesRepoImpl
 import io.vasilenko.otus.moviesearcher.data.repo.TopMoviesRepoImpl
 import io.vasilenko.otus.moviesearcher.data.source.local.LocalFavoriteMoviesDataSource
@@ -17,9 +18,10 @@ class MovieSearcherApp : Application() {
 
     //временное решение, т.к. мы еще не используем di
     companion object {
-        private val localMovieMapper = LocalMovieMapper()
+        private val localMovieMapper = MovieDtoMapper()
         private val topMoviesLocalDataSource = LocalTopMoviesDataSource(localMovieMapper)
-        private val topMoviesRemoteDataSource = RemoteTopMoviesDataSource()
+        private val topMoviesRemoteDataSource =
+            RemoteTopMoviesDataSource(NetworkProvider.api(), localMovieMapper)
         private val topMoviesRepo =
             TopMoviesRepoImpl(topMoviesLocalDataSource, topMoviesRemoteDataSource)
         private val favoriteMoviesLocalDataSource =

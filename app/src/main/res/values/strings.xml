@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Movie Searcher</string>
-    <string name="sample_movie_title">The Godfather</string>
-    <string name="sample_movie_rating">8.5/10</string>
-    <string name="movie_details">Вetails</string>
+    <string name="sample_movie_title">Movie Title</string>
+    <string name="sample_movie_rating">8.5</string>
+    <string name="movie_details">Details</string>
     <string name="sample_movie_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie. Fusce quis mauris a enim sollicitudin ultrices non eget velit. Aliquam eu pulvinar enim. Praesent libero nisl, ultricies vel maximus eu, maximus et nisi. Phasellus pharetra nec ligula vitae mollis. Quisque porttitor ornare magna, quis dignissim libero aliquam id. Donec sollicitudin ultrices ante, a semper erat tristique in. Vivamus sodales in ligula at sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla tempus bibendum nibh, ac tincidunt quam convallis non.</string>
     <string name="movie_comment_hint">Comment</string>
     <string name="movie_invite_menu_title">Invite</string>

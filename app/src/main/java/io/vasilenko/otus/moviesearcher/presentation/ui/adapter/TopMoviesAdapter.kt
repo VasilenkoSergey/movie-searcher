@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import kotlinx.android.synthetic.main.item_top_movie.view.*
@@ -27,8 +28,13 @@ class TopMoviesAdapter(
     }
 
     fun setMovies(movieItems: List<MovieModel>) {
-        movies.addAll(movieItems)
+        movies = movieItems as MutableList<MovieModel>
         notifyDataSetChanged()
+    }
+
+    fun addMovies(movieItems: List<MovieModel>) {
+        movies.addAll(movieItems)
+        notifyItemRangeInserted(movies.size - movieItems.size, movieItems.size)
     }
 
     class ViewHolder(movieItemView: View) : RecyclerView.ViewHolder(movieItemView) {
@@ -38,20 +44,19 @@ class TopMoviesAdapter(
             clickListener: (MovieModel) -> Unit,
             longClickListener: (MovieModel) -> Unit
         ) = with(itemView) {
-            movieModel.imgId = topMovieImg.context.resources.getIdentifier(
-                movieModel.imageName, "drawable", topMovieImg.context.packageName
-            )
+
+            Glide.with(itemView)
+                .load(movieModel.posterPath)
+                .placeholder(R.drawable.ic_movie_default)
+                .fallback(R.drawable.ic_movie_default)
+                .error(R.drawable.ic_movie_default)
+                .into(topMovieImg)
+
             topMovieTitle.text = movieModel.title
             topMovieRating.text = movieModel.rating
-            topMovieImg.setImageResource(
-                if (movieModel.imgId != EMPTY_RESOURCE_ID) movieModel.imgId else R.drawable.movie_default
-            )
+
             setOnClickListener { clickListener(movieModel) }
             setOnLongClickListener { longClickListener(movieModel); true }
         }
-    }
-
-    private companion object {
-        const val EMPTY_RESOURCE_ID = 0
     }
 }

@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import io.vasilenko.otus.moviesearcher.MovieSearcherApp
 import io.vasilenko.otus.moviesearcher.R
@@ -25,6 +27,10 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     lateinit var router: MoviesRouter
     lateinit var presenter: TopMoviesPresenter
+
+    private var isLoading = false
+
+    private lateinit var progressBar: ProgressBar
     private lateinit var topMoviesAdapter: TopMoviesAdapter
 
     override fun onCreateView(
@@ -41,7 +47,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         presenter = MovieSearcherApp.topMoviesPresenter
         presenter.attachView(this@TopMoviesFragment)
         setupViews()
-        getTopMovies()
+        presenter.onViewCreated()
     }
 
     override fun onDestroy() {
@@ -49,12 +55,17 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         presenter.detachView()
     }
 
-    override fun getTopMovies() {
-        presenter.loadTopMovies()
+    override fun setLoadingState(state: Boolean) {
+        isLoading = state
+        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun showTopMovies(movies: List<MovieModel>) {
         topMoviesAdapter.setMovies(movies)
+    }
+
+    override fun updateTopMovies(movies: List<MovieModel>) {
+        topMoviesAdapter.addMovies(movies)
     }
 
     override fun showMessageOnSuccessfulAddingToFavorites(movie: MovieModel) {
@@ -62,7 +73,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
             activity?.moviesContainer as View,
             getString(R.string.added_to_favorites),
             Snackbar.LENGTH_SHORT
-        ).setAction(getString(R.string.cancel_add_to_favorites)){
+        ).setAction(getString(R.string.cancel_add_to_favorites)) {
             presenter.deleteFromFavorites(movie)
         }.show()
     }
@@ -75,8 +86,17 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         ).show()
     }
 
+    override fun showErrorMessage(message: String) {
+        Snackbar.make(
+            activity?.moviesContainer as View,
+            message,
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
     private fun setupViews() {
         activity?.moviesAppToolBarText?.text = getString(R.string.movies_top_toolbar_title)
+        progressBar = topMoviesProgressBar
         topMoviesAdapter = TopMoviesAdapter(
             { movie -> movieOpenClickListener(movie) },
             { movie -> movieAddToFavoriteClickListener(movie) }
@@ -94,6 +114,21 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
             )
         )
         topMoviesRv.adapter = topMoviesAdapter
+        topMoviesRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!isLoading) {
+                    val layoutManager = recyclerView.layoutManager as GridLayoutManager
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    if (lastVisibleItemPosition == topMoviesAdapter.itemCount - 1) {
+                        presenter.onScrollTopMovies()
+                    }
+                }
+            }
+        })
+        topMoviesSwipeRefresh.setOnRefreshListener {
+            presenter.onRefreshTopMovies()
+            topMoviesSwipeRefresh.isRefreshing = false
+        }
     }
 
     private fun movieOpenClickListener(movie: MovieModel) {

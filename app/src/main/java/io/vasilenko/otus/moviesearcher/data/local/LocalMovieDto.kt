@@ -4,5 +4,6 @@ data class LocalMovieDto(
     val title: String,
     val description: String,
     val rating: String,
-    val imgName: String
+    var posterPath: String? = null,
+    var backdropPath: String? = null
 )

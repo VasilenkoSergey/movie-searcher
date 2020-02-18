@@ -8,15 +8,23 @@ class MovieModelMapper {
     fun mapMovieEntitiesToModels(movies: List<MovieEntity>): List<MovieModel> {
         return movies.map {
             MovieModel(
-                it.title,
-                it.description,
-                it.rating,
-                it.imgName
+                title = it.title,
+                description = it.description,
+                rating = it.rating,
+                posterPath = it.posterPath,
+                backdropPath = it.backdropPath
             )
         }
     }
 
     fun mapMovieModelToEntity(movie: MovieModel): MovieEntity {
-        return MovieEntity(null, movie.title, movie.description, movie.rating, movie.imageName)
+        return MovieEntity(
+            id = null,
+            title = movie.title,
+            description = movie.description,
+            rating = movie.rating,
+            posterPath = movie.posterPath,
+            backdropPath = movie.backdropPath
+        )
     }
 }

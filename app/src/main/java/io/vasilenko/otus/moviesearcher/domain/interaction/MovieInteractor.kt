@@ -4,7 +4,7 @@ import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
 
 interface MovieInteractor {
 
-    fun searchTopMovies(): List<MovieEntity>
+    fun searchTopMovies(listener: TopMoviesSearchListener, page: Int): List<MovieEntity>
 
     fun searchFavoriteMovies(): List<MovieEntity>
 
@@ -13,4 +13,9 @@ interface MovieInteractor {
     fun addMovieToFavorites(movieEntity: MovieEntity)
 
     fun removeMovieFromFavorites(movieEntity: MovieEntity)
+
+    interface TopMoviesSearchListener {
+        fun onSearchFinished(movies: List<MovieEntity>)
+        fun onSearchFailure(t: Throwable?)
+    }
 }

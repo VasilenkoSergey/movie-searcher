@@ -5,5 +5,6 @@ data class MovieEntity(
     val title: String,
     val description: String,
     val rating: String,
-    val imgName: String
+    val posterPath: String?,
+    val backdropPath: String?
 )

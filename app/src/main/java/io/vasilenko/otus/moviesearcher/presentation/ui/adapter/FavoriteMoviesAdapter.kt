@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import kotlinx.android.synthetic.main.item_favorite_movie.view.*
@@ -42,19 +43,18 @@ class FavoriteMoviesAdapter(private val clickListener: (MovieModel) -> Unit) :
 
         fun bindItems(movieModel: MovieModel, clickListener: (MovieModel) -> Unit) =
             with(itemView) {
-                movieModel.imgId = favoriteMovieImg.context.resources.getIdentifier(
-                    movieModel.imageName, "drawable", favoriteMovieImg.context.packageName
-                )
+
+                Glide.with(itemView)
+                    .load(movieModel.posterPath)
+                    .placeholder(R.drawable.ic_movie_default)
+                    .fallback(R.drawable.ic_movie_default)
+                    .error(R.drawable.ic_movie_default)
+                    .into(favoriteMovieImg)
+
                 favoriteMovieTitle.text = movieModel.title
                 favoriteMovieRating.text = movieModel.rating
-                favoriteMovieImg.setImageResource(
-                    if (movieModel.imgId != EMPTY_RESOURCE_ID) movieModel.imgId else R.drawable.movie_default
-                )
+
                 setOnClickListener { clickListener(movieModel) }
             }
-    }
-
-    private companion object {
-        const val EMPTY_RESOURCE_ID = 0
     }
 }
