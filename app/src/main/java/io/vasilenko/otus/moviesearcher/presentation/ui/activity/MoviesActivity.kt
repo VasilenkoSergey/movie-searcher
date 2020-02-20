@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import io.vasilenko.otus.moviesearcher.MovieSearcherApp
 import io.vasilenko.otus.moviesearcher.R
+import io.vasilenko.otus.moviesearcher.presentation.common.MessageBundle
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouterHandler
 import io.vasilenko.otus.moviesearcher.presentation.ui.dialog.QuitDialog
@@ -56,6 +58,18 @@ class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
         } else {
             transaction.commit()
         }
+    }
+
+    override fun onMessage(messageBundle: MessageBundle) {
+        val snackbar = Snackbar.make(
+            requireViewById(R.id.moviesContainer),
+            messageBundle.text,
+            Snackbar.LENGTH_SHORT
+        )
+        messageBundle.action?.let {
+            snackbar.setAction(messageBundle.action.name, messageBundle.action.listener).show()
+        }
+        snackbar.show()
     }
 
     private fun navBarListener(item: MenuItem): Boolean {

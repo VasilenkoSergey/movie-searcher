@@ -1,6 +1,7 @@
 package io.vasilenko.otus.moviesearcher.presentation.navigation.impl
 
 import androidx.fragment.app.Fragment
+import io.vasilenko.otus.moviesearcher.presentation.common.MessageBundle
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouterHandler
 
@@ -14,5 +15,9 @@ class MoviesRouterImpl : MoviesRouter {
 
     override fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean) {
         routerHandler?.onOpenFragment(fragment, addToBackStack)
+    }
+
+    override fun onMessage(messageBundle: MessageBundle) {
+        routerHandler?.onMessage(messageBundle)
     }
 }
