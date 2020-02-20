@@ -1,6 +1,5 @@
 package io.vasilenko.otus.moviesearcher.presentation.ui.fragment
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.presenter.TopMoviesPresenter
-import io.vasilenko.otus.moviesearcher.presentation.ui.activity.MovieDetailsActivity
 import io.vasilenko.otus.moviesearcher.presentation.ui.adapter.TopMoviesAdapter
 import io.vasilenko.otus.moviesearcher.presentation.ui.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
@@ -50,8 +48,8 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         presenter.onViewCreated()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         presenter.detachView()
     }
 
@@ -95,7 +93,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
     }
 
     private fun setupViews() {
-        activity?.moviesAppToolBarText?.text = getString(R.string.movies_top_toolbar_title)
+        topMoviesToolbar.title = getString(R.string.movies_top_toolbar_title)
         progressBar = topMoviesProgressBar
         topMoviesAdapter = TopMoviesAdapter(
             { movie -> movieOpenClickListener(movie) },
@@ -132,9 +130,10 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
     }
 
     private fun movieOpenClickListener(movie: MovieModel) {
-        router.onOpenActivity(Intent(requireContext(), MovieDetailsActivity::class.java).apply {
-            putExtra("movie", movie)
-        })
+        val bundle = Bundle()
+        bundle.putParcelable("movie", movie)
+        val movieDetailsFragment = MovieDetailsFragment.newInstance(args = bundle)
+        router.onOpenFragment(movieDetailsFragment, addToBackStack = true)
     }
 
     private fun movieAddToFavoriteClickListener(movie: MovieModel) {

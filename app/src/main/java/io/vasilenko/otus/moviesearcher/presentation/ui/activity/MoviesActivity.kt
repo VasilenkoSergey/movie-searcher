@@ -1,6 +1,5 @@
 package io.vasilenko.otus.moviesearcher.presentation.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -31,9 +30,13 @@ class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
     }
 
     override fun onBackPressed() {
-        val dialog = QuitDialog(this@MoviesActivity)
-        dialog.setOnCancelListener { super.onBackPressed() }
-        dialog.show()
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            val dialog = QuitDialog(this@MoviesActivity)
+            dialog.setOnCancelListener { super.onBackPressed() }
+            dialog.show()
+        }
     }
 
     override fun showTopMovies() {
@@ -44,13 +47,10 @@ class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
         onOpenFragment(FavoriteMoviesFragment(), addToBackStack = false)
     }
 
-    override fun onOpenActivity(intent: Intent) {
-        this@MoviesActivity.startActivity(intent)
-    }
-
     override fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean) {
+        val tag = fragment.javaClass.name
         val transaction =
-            supportFragmentManager.beginTransaction().replace(R.id.moviesContainer, fragment)
+            supportFragmentManager.beginTransaction().replace(R.id.moviesContainer, fragment, tag)
         if (addToBackStack) {
             transaction.addToBackStack(fragment.javaClass.name).commit()
         } else {
