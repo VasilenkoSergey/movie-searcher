@@ -2,6 +2,7 @@ package io.vasilenko.otus.moviesearcher.presentation.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -31,8 +32,20 @@ class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(NAV_BAR_VISIBILITY_KEY, moviesBottomNavigation.visibility)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val navBarVisibility = savedInstanceState.getInt(NAV_BAR_VISIBILITY_KEY, View.VISIBLE)
+        moviesBottomNavigation.visibility = navBarVisibility
+    }
+
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
+            moviesBottomNavigation.visibility = View.VISIBLE
             supportFragmentManager.popBackStack()
         } else {
             val dialog = QuitDialog(this@MoviesActivity)
@@ -42,22 +55,20 @@ class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
     }
 
     override fun showTopMovies() {
-        onOpenFragment(TopMoviesFragment(), addToBackStack = false)
+        onOpenFragment(TopMoviesFragment(), addToBackStack = false, showNavBar = true)
     }
 
     override fun showFavoriteMovies() {
-        onOpenFragment(FavoriteMoviesFragment(), addToBackStack = false)
+        onOpenFragment(FavoriteMoviesFragment(), addToBackStack = false, showNavBar = true)
     }
 
-    override fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean) {
+    override fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean, showNavBar: Boolean) {
         val tag = fragment.javaClass.name
         val transaction =
             supportFragmentManager.beginTransaction().replace(R.id.moviesContainer, fragment, tag)
-        if (addToBackStack) {
-            transaction.addToBackStack(fragment.javaClass.name).commit()
-        } else {
-            transaction.commit()
-        }
+        if (addToBackStack) transaction.addToBackStack(fragment.javaClass.name)
+        if (!showNavBar) moviesBottomNavigation.visibility = View.GONE
+        transaction.commit()
     }
 
     override fun onMessage(messageBundle: MessageBundle) {
@@ -81,5 +92,9 @@ class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
             R.id.favoriteMoviesMenu -> showFavoriteMovies()
         }
         return true
+    }
+
+    private companion object {
+        const val NAV_BAR_VISIBILITY_KEY = "NAV_BAR_VISIBILITY_KEY"
     }
 }

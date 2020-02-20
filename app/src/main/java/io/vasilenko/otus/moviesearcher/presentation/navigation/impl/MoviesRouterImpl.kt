@@ -13,8 +13,8 @@ class MoviesRouterImpl : MoviesRouter {
         this.routerHandler = routerHandler
     }
 
-    override fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean) {
-        routerHandler?.onOpenFragment(fragment, addToBackStack)
+    override fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean, showNavBar: Boolean) {
+        routerHandler?.onOpenFragment(fragment, addToBackStack, showNavBar)
     }
 
     override fun onMessage(messageBundle: MessageBundle) {

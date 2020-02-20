@@ -7,7 +7,7 @@ interface MoviesRouter {
 
     fun setRouterHandler(routerHandler: MoviesRouterHandler)
 
-    fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean)
+    fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean, showNavBar: Boolean)
 
     fun onMessage(messageBundle: MessageBundle)
 }

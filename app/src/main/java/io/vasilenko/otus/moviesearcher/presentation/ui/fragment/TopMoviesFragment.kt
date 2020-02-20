@@ -124,7 +124,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         val bundle = Bundle()
         bundle.putParcelable("movie", movie)
         val movieDetailsFragment = MovieDetailsFragment.newInstance(args = bundle)
-        router.onOpenFragment(movieDetailsFragment, addToBackStack = true)
+        router.onOpenFragment(movieDetailsFragment, addToBackStack = true, showNavBar = false)
     }
 
     private fun movieAddToFavoriteClickListener(movie: MovieModel) {

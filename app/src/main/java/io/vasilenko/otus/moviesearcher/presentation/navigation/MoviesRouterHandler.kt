@@ -5,7 +5,7 @@ import io.vasilenko.otus.moviesearcher.presentation.common.MessageBundle
 
 interface MoviesRouterHandler {
 
-    fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean)
+    fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean, showNavBar: Boolean)
 
     fun onMessage(messageBundle: MessageBundle)
 }
