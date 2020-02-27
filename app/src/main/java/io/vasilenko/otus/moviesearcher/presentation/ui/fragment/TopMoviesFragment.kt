@@ -49,10 +49,12 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        val layoutManager = topMoviesRv.layoutManager as GridLayoutManager
+        presenter.onDestroyView(layoutManager.findFirstCompletelyVisibleItemPosition())
         presenter.detachView()
     }
 
-    override fun setLoadingState(state: Boolean) {
+    override fun showLoading(state: Boolean) {
         isLoading = state
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
@@ -83,6 +85,11 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         router.onMessage(MessageBundle(message))
     }
 
+    override fun scrollToPosition(position: Int) {
+        val layoutManager = topMoviesRv.layoutManager as GridLayoutManager
+        layoutManager.scrollToPosition(position)
+    }
+
     private fun setupViews() {
         topMoviesToolbar.title = getString(R.string.movies_top_toolbar_title)
         progressBar = topMoviesProgressBar
@@ -108,7 +115,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
                 if (!isLoading) {
                     val layoutManager = recyclerView.layoutManager as GridLayoutManager
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                    if (lastVisibleItemPosition == topMoviesAdapter.itemCount - 1) {
+                    if (dy > 0 && lastVisibleItemPosition == topMoviesAdapter.itemCount - 1) {
                         presenter.onScrollTopMovies()
                     }
                 }

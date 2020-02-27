@@ -23,7 +23,7 @@ class MovieDetailsFragment : Fragment(), MovieDetailsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        detailsBackButton.setOnClickListener { fragmentManager?.popBackStack() }
+        detailsBackButton.setOnClickListener { requireActivity().onBackPressed() }
         showMovie()
     }
 

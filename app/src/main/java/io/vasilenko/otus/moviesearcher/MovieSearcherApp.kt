@@ -21,7 +21,11 @@ class MovieSearcherApp : Application() {
         private val localMovieMapper = MovieDtoMapper()
         private val topMoviesLocalDataSource = LocalTopMoviesDataSource(localMovieMapper)
         private val topMoviesRemoteDataSource =
-            RemoteTopMoviesDataSource(NetworkProvider.api(), localMovieMapper)
+            RemoteTopMoviesDataSource(
+                NetworkProvider.api(),
+                localMovieMapper,
+                topMoviesLocalDataSource
+            )
         private val topMoviesRepo =
             TopMoviesRepoImpl(topMoviesLocalDataSource, topMoviesRemoteDataSource)
         private val favoriteMoviesLocalDataSource =
