@@ -1,6 +1,5 @@
 package io.vasilenko.otus.moviesearcher.presentation.ui.fragment
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,17 +9,15 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import io.vasilenko.otus.moviesearcher.MovieSearcherApp
 import io.vasilenko.otus.moviesearcher.R
+import io.vasilenko.otus.moviesearcher.presentation.common.MessageBundle
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.presenter.TopMoviesPresenter
-import io.vasilenko.otus.moviesearcher.presentation.ui.activity.MovieDetailsActivity
 import io.vasilenko.otus.moviesearcher.presentation.ui.adapter.TopMoviesAdapter
 import io.vasilenko.otus.moviesearcher.presentation.ui.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
-import kotlinx.android.synthetic.main.activity_movies.*
 import kotlinx.android.synthetic.main.fragment_top_movies.*
 
 class TopMoviesFragment : Fragment(), TopMoviesView {
@@ -50,12 +47,14 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         presenter.onViewCreated()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val layoutManager = topMoviesRv.layoutManager as GridLayoutManager
+        presenter.onDestroyView(layoutManager.findFirstCompletelyVisibleItemPosition())
         presenter.detachView()
     }
 
-    override fun setLoadingState(state: Boolean) {
+    override fun showLoading(state: Boolean) {
         isLoading = state
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
@@ -69,33 +68,30 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
     }
 
     override fun showMessageOnSuccessfulAddingToFavorites(movie: MovieModel) {
-        Snackbar.make(
-            activity?.moviesContainer as View,
-            getString(R.string.added_to_favorites),
-            Snackbar.LENGTH_SHORT
-        ).setAction(getString(R.string.cancel_add_to_favorites)) {
-            presenter.deleteFromFavorites(movie)
-        }.show()
+        val text = getString(R.string.added_to_favorites)
+        val action =
+            MessageBundle.Action(getString(R.string.cancel_add_to_favorites), View.OnClickListener {
+                presenter.deleteFromFavorites(movie)
+            })
+        router.onMessage(MessageBundle(text, action))
     }
 
     override fun showMessageIfMovieExistInFavorites() {
-        Snackbar.make(
-            activity?.moviesContainer as View,
-            getString(R.string.already_favorite),
-            Snackbar.LENGTH_SHORT
-        ).show()
+        val text = getString(R.string.already_favorite)
+        router.onMessage(MessageBundle(text))
     }
 
     override fun showErrorMessage(message: String) {
-        Snackbar.make(
-            activity?.moviesContainer as View,
-            message,
-            Snackbar.LENGTH_SHORT
-        ).show()
+        router.onMessage(MessageBundle(message))
+    }
+
+    override fun scrollToPosition(position: Int) {
+        val layoutManager = topMoviesRv.layoutManager as GridLayoutManager
+        layoutManager.scrollToPosition(position)
     }
 
     private fun setupViews() {
-        activity?.moviesAppToolBarText?.text = getString(R.string.movies_top_toolbar_title)
+        topMoviesToolbar.title = getString(R.string.movies_top_toolbar_title)
         progressBar = topMoviesProgressBar
         topMoviesAdapter = TopMoviesAdapter(
             { movie -> movieOpenClickListener(movie) },
@@ -119,7 +115,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
                 if (!isLoading) {
                     val layoutManager = recyclerView.layoutManager as GridLayoutManager
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                    if (lastVisibleItemPosition == topMoviesAdapter.itemCount - 1) {
+                    if (dy > 0 && lastVisibleItemPosition == topMoviesAdapter.itemCount - 1) {
                         presenter.onScrollTopMovies()
                     }
                 }
@@ -132,9 +128,10 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
     }
 
     private fun movieOpenClickListener(movie: MovieModel) {
-        router.onOpenActivity(Intent(requireContext(), MovieDetailsActivity::class.java).apply {
-            putExtra("movie", movie)
-        })
+        val bundle = Bundle()
+        bundle.putParcelable("movie", movie)
+        val movieDetailsFragment = MovieDetailsFragment.newInstance(args = bundle)
+        router.onOpenFragment(movieDetailsFragment, addToBackStack = true, showNavBar = false)
     }
 
     private fun movieAddToFavoriteClickListener(movie: MovieModel) {

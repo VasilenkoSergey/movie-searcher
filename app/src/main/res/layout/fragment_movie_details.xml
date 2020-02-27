@@ -21,13 +21,12 @@
             <ImageView
                 android:id="@+id/movieImg"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="320dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_movie_default"
                 app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/movieDetailsToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"

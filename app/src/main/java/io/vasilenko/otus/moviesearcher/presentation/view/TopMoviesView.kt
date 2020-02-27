@@ -4,7 +4,7 @@ import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 
 interface TopMoviesView : BaseView {
 
-    fun setLoadingState(state: Boolean)
+    fun showLoading(state: Boolean)
 
     fun showTopMovies(movies: List<MovieModel>)
 
@@ -15,4 +15,6 @@ interface TopMoviesView : BaseView {
     fun showMessageIfMovieExistInFavorites()
 
     fun showErrorMessage(message: String)
+
+    fun scrollToPosition(position: Int)
 }

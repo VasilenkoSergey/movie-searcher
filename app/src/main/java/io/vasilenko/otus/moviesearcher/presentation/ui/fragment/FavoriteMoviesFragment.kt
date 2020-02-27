@@ -1,6 +1,5 @@
 package io.vasilenko.otus.moviesearcher.presentation.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,9 @@ import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.presenter.FavoriteMoviesPresenter
-import io.vasilenko.otus.moviesearcher.presentation.ui.activity.MovieDetailsActivity
 import io.vasilenko.otus.moviesearcher.presentation.ui.adapter.FavoriteMoviesAdapter
 import io.vasilenko.otus.moviesearcher.presentation.ui.decoration.MovieItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.view.FavoriteMoviesView
-import kotlinx.android.synthetic.main.activity_movies.*
 import kotlinx.android.synthetic.main.fragment_favorite_movies.*
 
 class FavoriteMoviesFragment : Fragment(), FavoriteMoviesView {
@@ -44,8 +41,8 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesView {
         getFavoriteMovies()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         presenter.detachView()
     }
 
@@ -58,7 +55,7 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesView {
     }
 
     private fun setupViews() {
-        activity?.moviesAppToolBarText?.text = getString(R.string.movies_favorite_toolbar_title)
+        favoriteMoviesToolbar.title = getString(R.string.movies_favorite_toolbar_title)
         favoriteMoviesAdapter = FavoriteMoviesAdapter { movie -> movieClickListener(movie) }
         favoriteMoviesRv.layoutManager = LinearLayoutManager(requireContext())
         val padding = resources.getDimensionPixelSize(R.dimen.default_padding)
@@ -91,9 +88,10 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesView {
     }
 
     private fun movieClickListener(movie: MovieModel) {
-        router.onOpenActivity(Intent(requireContext(), MovieDetailsActivity::class.java).apply {
-            putExtra("movie", movie)
-        })
+        val bundle = Bundle()
+        bundle.putParcelable("movie", movie)
+        val movieDetailsFragment = MovieDetailsFragment.newInstance(args = bundle)
+        router.onOpenFragment(movieDetailsFragment, addToBackStack = true, showNavBar = false)
     }
 
     private fun showEmptyPlaceHolder() {

@@ -11,24 +11,31 @@ class TopMoviesPresenterImpl(
     private val movieInteractor: MovieInteractor,
     private val mapper: MovieModelMapper
 ) : BasePresenterImpl<TopMoviesView>(), TopMoviesPresenter,
-    MovieInteractor.TopMoviesSearchListener {
+    MovieInteractor.TopMoviesSearchListener, MovieInteractor.NextTopMoviesSearchListener {
 
     private var currentPage = INITIAL_PAGE
+    private var position = INITIAL_POSTITION
 
     override fun onViewCreated() {
         loadTopMovies()
     }
 
     override fun loadTopMovies() {
-        currentPage = INITIAL_PAGE
-        view?.setLoadingState(true)
-        movieInteractor.searchTopMovies(this, currentPage)
+        view?.showLoading(true)
+        movieInteractor.searchTopMovies(listener = this)
     }
 
     override fun loadNextTopMovies() {
         currentPage++
-        view?.setLoadingState(true)
-        movieInteractor.searchTopMovies(this, currentPage)
+        view?.showLoading(true)
+        movieInteractor.searchNextTopMovies(listener = this, page = currentPage)
+    }
+
+    override fun reloadTopMovies() {
+        currentPage = INITIAL_PAGE
+        position = INITIAL_POSTITION
+        view?.showLoading(true)
+        movieInteractor.reloadTopMovies(listener = this)
     }
 
     override fun onScrollTopMovies() {
@@ -36,7 +43,11 @@ class TopMoviesPresenterImpl(
     }
 
     override fun onRefreshTopMovies() {
-        loadTopMovies()
+        reloadTopMovies()
+    }
+
+    override fun onDestroyView(position: Int) {
+        this.position = position
     }
 
     override fun addMovieToFavorites(movieModel: MovieModel) {
@@ -55,19 +66,26 @@ class TopMoviesPresenterImpl(
     }
 
     override fun onSearchFinished(movies: List<MovieEntity>) {
-        if (currentPage == INITIAL_PAGE) {
-            view?.showTopMovies(mapper.mapMovieEntitiesToModels(movies))
-        } else {
-            view?.updateTopMovies(mapper.mapMovieEntitiesToModels(movies))
-        }
-        view?.setLoadingState(false)
+        view?.showTopMovies(mapper.mapMovieEntitiesToModels(movies))
+        view?.scrollToPosition(position)
+        view?.showLoading(false)
     }
 
     override fun onSearchFailure(t: Throwable?) {
         t?.message?.let { view?.showErrorMessage(it) }
     }
 
+    override fun onNextSearchFinished(movies: List<MovieEntity>) {
+        view?.updateTopMovies(mapper.mapMovieEntitiesToModels(movies))
+        view?.showLoading(false)
+    }
+
+    override fun onNextSearchFailure(t: Throwable?) {
+        t?.message?.let { view?.showErrorMessage(it) }
+    }
+
     private companion object {
         const val INITIAL_PAGE = 1
+        const val INITIAL_POSTITION = 0
     }
 }

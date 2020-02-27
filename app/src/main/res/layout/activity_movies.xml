@@ -1,53 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/moviesAppBar"
+    <FrameLayout
+        android:id="@+id/moviesContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/gray" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/moviesAppToolBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <TextView
-                android:id="@+id/moviesAppToolBarText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tool:text="@string/sample_toolbar_title" />
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/moviesBottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:id="@+id/moviesContainer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/gray" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/moviesBottomNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:itemIconTint="@color/movies_bottom_menu_color"
-            app:itemTextColor="@color/movies_bottom_menu_color"
-            app:menu="@menu/movies_bottom_menu" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:itemIconTint="@color/movies_bottom_menu_color"
+        app:itemTextColor="@color/movies_bottom_menu_color"
+        app:menu="@menu/movies_bottom_menu" />
 
 </LinearLayout>

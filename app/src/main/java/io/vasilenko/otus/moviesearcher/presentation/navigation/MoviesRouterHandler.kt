@@ -1,11 +1,11 @@
 package io.vasilenko.otus.moviesearcher.presentation.navigation
 
-import android.content.Intent
 import androidx.fragment.app.Fragment
+import io.vasilenko.otus.moviesearcher.presentation.common.MessageBundle
 
 interface MoviesRouterHandler {
 
-    fun onOpenActivity(intent: Intent)
+    fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean, showNavBar: Boolean)
 
-    fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean)
+    fun onMessage(messageBundle: MessageBundle)
 }
