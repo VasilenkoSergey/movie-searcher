@@ -1,6 +1,5 @@
 package io.vasilenko.otus.moviesearcher.presentation.presenter.impl
 
-import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
 import io.vasilenko.otus.moviesearcher.domain.interaction.MovieInteractor
 import io.vasilenko.otus.moviesearcher.presentation.mapper.MovieModelMapper
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
@@ -10,40 +9,56 @@ import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
 class TopMoviesPresenterImpl(
     private val movieInteractor: MovieInteractor,
     private val mapper: MovieModelMapper
-) : BasePresenterImpl<TopMoviesView>(), TopMoviesPresenter,
-    MovieInteractor.TopMoviesSearchListener, MovieInteractor.NextTopMoviesSearchListener {
+) : BasePresenterImpl<TopMoviesView>(), TopMoviesPresenter {
 
     private var currentPage = INITIAL_PAGE
-    private var position = INITIAL_POSTITION
+    private var position = INITIAL_POSITION
 
     override fun onViewCreated() {
-        loadTopMovies()
-    }
-
-    override fun loadTopMovies() {
-        view?.showLoading(true)
-        movieInteractor.searchTopMovies(listener = this)
-    }
-
-    override fun loadNextTopMovies() {
-        currentPage++
-        view?.showLoading(true)
-        movieInteractor.searchNextTopMovies(listener = this, page = currentPage)
-    }
-
-    override fun reloadTopMovies() {
-        currentPage = INITIAL_PAGE
-        position = INITIAL_POSTITION
-        view?.showLoading(true)
-        movieInteractor.reloadTopMovies(listener = this)
+        addDisposable(movieInteractor.searchTopMovies()
+            .doOnSubscribe {
+                view?.showLoading(state = true)
+            }
+            .subscribe({
+                view?.showTopMovies(mapper.mapMovieEntitiesToModels(it))
+                view?.scrollToPosition(position)
+                view?.showLoading(false)
+            }, {
+                it?.message?.let { msg -> view?.showErrorMessage(msg) }
+            })
+        )
     }
 
     override fun onScrollTopMovies() {
-        loadNextTopMovies()
+        currentPage++
+        addDisposable(movieInteractor.searchNextTopMovies(page = currentPage)
+            .doOnSubscribe {
+                view?.showLoading(state = true)
+            }
+            .subscribe({
+                view?.updateTopMovies(mapper.mapMovieEntitiesToModels(it))
+                view?.showLoading(state = false)
+            }, {
+                it?.message?.let { msg -> view?.showErrorMessage(msg) }
+            })
+        )
     }
 
     override fun onRefreshTopMovies() {
-        reloadTopMovies()
+        currentPage = INITIAL_PAGE
+        position = INITIAL_POSITION
+        addDisposable(movieInteractor.reloadTopMovies()
+            .doOnSubscribe {
+                view?.showLoading(state = true)
+            }
+            .subscribe({
+                view?.showTopMovies(mapper.mapMovieEntitiesToModels(it))
+                view?.scrollToPosition(position)
+                view?.showLoading(state = false)
+            }, {
+                it?.message?.let { msg -> view?.showErrorMessage(msg) }
+            })
+        )
     }
 
     override fun onDestroyView(position: Int) {
@@ -65,27 +80,8 @@ class TopMoviesPresenterImpl(
         movieInteractor.removeMovieFromFavorites(mapper.mapMovieModelToEntity(movie))
     }
 
-    override fun onSearchFinished(movies: List<MovieEntity>) {
-        view?.showTopMovies(mapper.mapMovieEntitiesToModels(movies))
-        view?.scrollToPosition(position)
-        view?.showLoading(false)
-    }
-
-    override fun onSearchFailure(t: Throwable?) {
-        t?.message?.let { view?.showErrorMessage(it) }
-    }
-
-    override fun onNextSearchFinished(movies: List<MovieEntity>) {
-        view?.updateTopMovies(mapper.mapMovieEntitiesToModels(movies))
-        view?.showLoading(false)
-    }
-
-    override fun onNextSearchFailure(t: Throwable?) {
-        t?.message?.let { view?.showErrorMessage(it) }
-    }
-
     private companion object {
         const val INITIAL_PAGE = 1
-        const val INITIAL_POSTITION = 0
+        const val INITIAL_POSITION = 0
     }
 }

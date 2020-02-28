@@ -7,12 +7,6 @@ interface TopMoviesPresenter : BasePresenter<TopMoviesView> {
 
     fun onViewCreated()
 
-    fun loadTopMovies()
-
-    fun loadNextTopMovies()
-
-    fun reloadTopMovies()
-
     fun onScrollTopMovies()
 
     fun onRefreshTopMovies()

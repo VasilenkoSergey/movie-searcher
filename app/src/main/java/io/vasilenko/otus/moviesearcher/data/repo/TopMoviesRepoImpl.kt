@@ -1,9 +1,10 @@
 package io.vasilenko.otus.moviesearcher.data.repo
 
+import io.reactivex.Observable
+import io.vasilenko.otus.moviesearcher.core.applySchedulers
 import io.vasilenko.otus.moviesearcher.data.source.TopMoviesDataSource
 import io.vasilenko.otus.moviesearcher.data.source.local.LocalTopMoviesDataSource
 import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
-import io.vasilenko.otus.moviesearcher.domain.interaction.MovieInteractor
 import io.vasilenko.otus.moviesearcher.domain.repo.TopMoviesRepo
 
 class TopMoviesRepoImpl(
@@ -11,27 +12,26 @@ class TopMoviesRepoImpl(
     private val topMoviesRemoteDataSource: TopMoviesDataSource
 ) : TopMoviesRepo {
 
-    override fun getAllMovies(
-        listener: MovieInteractor.TopMoviesSearchListener
-    ): List<MovieEntity> {
-        if (topMoviesLocalDataSource.isCacheEmpty()) {
-            topMoviesRemoteDataSource.getAllMovies(listener)
+    override fun getAllMovies(): Observable<List<MovieEntity>> {
+        return if (topMoviesLocalDataSource.isCacheEmpty()) {
+            topMoviesRemoteDataSource.getAllMovies().doOnNext {
+                topMoviesLocalDataSource.setMovies(it)
+            }.applySchedulers()
         } else {
-            topMoviesLocalDataSource.getAllMovies(listener)
+            topMoviesLocalDataSource.getAllMovies()
         }
-        return emptyList()
     }
 
-    override fun getAllMoviesByPage(
-        listener: MovieInteractor.NextTopMoviesSearchListener,
-        page: Int
-    ): List<MovieEntity> {
-        topMoviesRemoteDataSource.getMoviesByPage(listener, page)
-        return emptyList()
+    override fun getAllMoviesByPage(page: Int): Observable<List<MovieEntity>> {
+        return topMoviesRemoteDataSource.getAllMovies(page).doOnNext {
+            topMoviesLocalDataSource.addMovies(it)
+        }.applySchedulers()
     }
 
-    override fun refreshAllMovies(listener: MovieInteractor.TopMoviesSearchListener) {
+    override fun refreshAllMovies(): Observable<List<MovieEntity>> {
         topMoviesLocalDataSource.clearCache()
-        topMoviesRemoteDataSource.getAllMovies(listener)
+        return topMoviesRemoteDataSource.getAllMovies().doOnNext {
+            topMoviesLocalDataSource.setMovies(it)
+        }.applySchedulers()
     }
 }

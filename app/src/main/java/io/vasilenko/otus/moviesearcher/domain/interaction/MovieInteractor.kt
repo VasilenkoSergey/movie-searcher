@@ -1,14 +1,15 @@
 package io.vasilenko.otus.moviesearcher.domain.interaction
 
+import io.reactivex.Observable
 import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
 
 interface MovieInteractor {
 
-    fun searchTopMovies(listener: TopMoviesSearchListener): List<MovieEntity>
+    fun searchTopMovies(): Observable<List<MovieEntity>>
 
-    fun searchNextTopMovies(listener: NextTopMoviesSearchListener, page: Int): List<MovieEntity>
+    fun searchNextTopMovies(page: Int): Observable<List<MovieEntity>>
 
-    fun reloadTopMovies(listener: TopMoviesSearchListener)
+    fun reloadTopMovies(): Observable<List<MovieEntity>>
 
     fun searchFavoriteMovies(): List<MovieEntity>
 
@@ -17,14 +18,4 @@ interface MovieInteractor {
     fun addMovieToFavorites(movieEntity: MovieEntity)
 
     fun removeMovieFromFavorites(movieEntity: MovieEntity)
-
-    interface TopMoviesSearchListener {
-        fun onSearchFinished(movies: List<MovieEntity>)
-        fun onSearchFailure(t: Throwable?)
-    }
-
-    interface NextTopMoviesSearchListener {
-        fun onNextSearchFinished(movies: List<MovieEntity>)
-        fun onNextSearchFailure(t: Throwable?)
-    }
 }
