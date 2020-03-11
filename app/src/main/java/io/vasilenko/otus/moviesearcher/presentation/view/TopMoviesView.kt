@@ -1,6 +1,8 @@
 package io.vasilenko.otus.moviesearcher.presentation.view
 
+import io.vasilenko.otus.moviesearcher.core.presentation.BaseView
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
+import io.vasilenko.otus.moviesearcher.presentation.ui.top.Message
 
 interface TopMoviesView : BaseView {
 
@@ -14,7 +16,7 @@ interface TopMoviesView : BaseView {
 
     fun showMessageIfMovieExistInFavorites()
 
-    fun showErrorMessage(message: String)
+    fun showErrorMessage(text: String, message: Message)
 
     fun scrollToPosition(position: Int)
 }

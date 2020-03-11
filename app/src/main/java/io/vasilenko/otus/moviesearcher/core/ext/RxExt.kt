@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.core
+package io.vasilenko.otus.moviesearcher.core.ext
 
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

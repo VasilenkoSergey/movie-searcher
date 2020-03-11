@@ -1,5 +1,6 @@
 package io.vasilenko.otus.moviesearcher.presentation.view
 
+import io.vasilenko.otus.moviesearcher.core.presentation.BaseView
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 
 interface FavoriteMoviesView : BaseView {

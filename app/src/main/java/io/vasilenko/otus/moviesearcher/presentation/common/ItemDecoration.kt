@@ -1,10 +1,10 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui.decoration
+package io.vasilenko.otus.moviesearcher.presentation.common
 
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class MovieItemDecoration(private val padding: Int) : RecyclerView.ItemDecoration() {
+class ItemDecoration(private val padding: Int) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
         outRect: Rect,

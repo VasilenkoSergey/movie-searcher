@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui.adapter
+package io.vasilenko.otus.moviesearcher.presentation.ui.favorite
 
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +15,7 @@ class FavoriteMoviesAdapter(private val clickListener: (MovieModel) -> Unit) :
     private var movies: MutableList<MovieModel> = mutableListOf()
 
     fun setMovies(movieItems: List<MovieModel>) {
-        movies.addAll(movieItems)
+        movies = movieItems as MutableList<MovieModel>
         notifyDataSetChanged()
     }
 

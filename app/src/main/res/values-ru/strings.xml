@@ -23,4 +23,5 @@
     <string name="sample_movie_title">Название</string>
     <string name="sample_toolbar_title">Название</string>
     <string name="sample_movie_description">Описание</string>
+    <string name="retry">Повторить</string>
 </resources>

@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui.activity
+package io.vasilenko.otus.moviesearcher.presentation
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,17 +9,20 @@ import com.google.android.material.snackbar.Snackbar
 import io.vasilenko.otus.moviesearcher.MovieSearcherApp
 import io.vasilenko.otus.moviesearcher.R
 import io.vasilenko.otus.moviesearcher.presentation.common.MessageBundle
+import io.vasilenko.otus.moviesearcher.presentation.common.QuitDialog
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouterHandler
-import io.vasilenko.otus.moviesearcher.presentation.ui.dialog.QuitDialog
-import io.vasilenko.otus.moviesearcher.presentation.ui.fragment.FavoriteMoviesFragment
-import io.vasilenko.otus.moviesearcher.presentation.ui.fragment.TopMoviesFragment
+import io.vasilenko.otus.moviesearcher.presentation.ui.favorite.FavoriteMoviesFragment
+import io.vasilenko.otus.moviesearcher.presentation.ui.top.TopMoviesFragment
 import io.vasilenko.otus.moviesearcher.presentation.view.MoviesView
 import kotlinx.android.synthetic.main.activity_movies.*
 
 class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
 
     lateinit var router: MoviesRouter
+
+    private val top: TopMoviesFragment by lazy { TopMoviesFragment() }
+    private val favorite: FavoriteMoviesFragment by lazy { FavoriteMoviesFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,18 +51,21 @@ class MoviesActivity : AppCompatActivity(), MoviesView, MoviesRouterHandler {
             moviesBottomNavigation.visibility = View.VISIBLE
             supportFragmentManager.popBackStack()
         } else {
-            val dialog = QuitDialog(this@MoviesActivity)
+            val dialog =
+                QuitDialog(
+                    this@MoviesActivity
+                )
             dialog.setOnCancelListener { super.onBackPressed() }
             dialog.show()
         }
     }
 
     override fun showTopMovies() {
-        onOpenFragment(TopMoviesFragment(), addToBackStack = false, showNavBar = true)
+        onOpenFragment(top, addToBackStack = false, showNavBar = true)
     }
 
     override fun showFavoriteMovies() {
-        onOpenFragment(FavoriteMoviesFragment(), addToBackStack = false, showNavBar = true)
+        onOpenFragment(favorite, addToBackStack = false, showNavBar = true)
     }
 
     override fun onOpenFragment(fragment: Fragment, addToBackStack: Boolean, showNavBar: Boolean) {

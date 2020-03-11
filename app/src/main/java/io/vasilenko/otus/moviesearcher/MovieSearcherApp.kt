@@ -11,8 +11,8 @@ import io.vasilenko.otus.moviesearcher.data.source.remote.RemoteTopMoviesDataSou
 import io.vasilenko.otus.moviesearcher.domain.interaction.MovieInteractorImpl
 import io.vasilenko.otus.moviesearcher.presentation.mapper.MovieModelMapper
 import io.vasilenko.otus.moviesearcher.presentation.navigation.impl.MoviesRouterImpl
-import io.vasilenko.otus.moviesearcher.presentation.presenter.impl.FavoriteMoviesPresenterImpl
-import io.vasilenko.otus.moviesearcher.presentation.presenter.impl.TopMoviesPresenterImpl
+import io.vasilenko.otus.moviesearcher.presentation.ui.favorite.FavoriteMoviesVMFactory
+import io.vasilenko.otus.moviesearcher.presentation.ui.top.TopMoviesVMFactory
 
 class MovieSearcherApp : Application() {
 
@@ -29,8 +29,8 @@ class MovieSearcherApp : Application() {
         private val favoriteMoviesRepo = FavoriteMoviesRepoImpl(favoriteMoviesLocalDataSource)
         private val interactor = MovieInteractorImpl(topMoviesRepo, favoriteMoviesRepo)
         private val movieModelMapper = MovieModelMapper()
-        val topMoviesPresenter = TopMoviesPresenterImpl(interactor, movieModelMapper)
-        val favoriteMoviesPresenter = FavoriteMoviesPresenterImpl(interactor, movieModelMapper)
         val router = MoviesRouterImpl()
+        val topMoviesViewModelFactory = TopMoviesVMFactory(interactor, movieModelMapper)
+        val favoriteMoviesViewModelFactory = FavoriteMoviesVMFactory(interactor, movieModelMapper)
     }
 }

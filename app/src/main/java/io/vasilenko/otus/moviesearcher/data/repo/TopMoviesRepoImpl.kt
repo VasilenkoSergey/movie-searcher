@@ -1,7 +1,7 @@
 package io.vasilenko.otus.moviesearcher.data.repo
 
 import io.reactivex.Observable
-import io.vasilenko.otus.moviesearcher.core.applySchedulers
+import io.vasilenko.otus.moviesearcher.core.ext.applySchedulers
 import io.vasilenko.otus.moviesearcher.data.source.TopMoviesDataSource
 import io.vasilenko.otus.moviesearcher.data.source.local.LocalTopMoviesDataSource
 import io.vasilenko.otus.moviesearcher.domain.entity.MovieEntity
