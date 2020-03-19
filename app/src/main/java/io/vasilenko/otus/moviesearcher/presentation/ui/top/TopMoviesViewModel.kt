@@ -35,7 +35,7 @@ class TopMoviesViewModel(
                 )
             }, {
                 _viewState.value = currentViewState().copy(isLoading = false)
-                it?.message?.let { msg -> _messageState.value = Message.LoadError(msg) }
+                _messageState.value = Message.LoadError
             })
         )
     }
@@ -59,7 +59,7 @@ class TopMoviesViewModel(
                 )
             }, {
                 _viewState.value = currentViewState().copy(isLoading = false)
-                it?.message?.let { msg -> _messageState.value = Message.LoadNextError(msg) }
+                _messageState.value = Message.LoadNextError
             })
         )
     }
@@ -82,7 +82,7 @@ class TopMoviesViewModel(
                 )
             }, {
                 _viewState.value = currentViewState().copy(isLoading = false)
-                it?.message?.let { msg -> _messageState.value = Message.RefreshError(msg) }
+                _messageState.value = Message.RefreshError
             })
         )
     }

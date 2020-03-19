@@ -16,7 +16,7 @@ interface TopMoviesView : BaseView {
 
     fun showMessageIfMovieExistInFavorites()
 
-    fun showErrorMessage(text: String, message: Message)
+    fun showErrorMessage(message: Message)
 
     fun scrollToPosition(position: Int)
 }

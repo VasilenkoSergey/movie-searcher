@@ -54,9 +54,9 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
             when (it) {
                 is Message.AddToFavorite -> showMessageOnSuccessfulAddingToFavorites(it.movie)
                 is Message.FavoriteExist -> showMessageIfMovieExistInFavorites()
-                is Message.LoadError -> showErrorMessage(it.msg, it)
-                is Message.LoadNextError -> showErrorMessage(it.msg, it)
-                is Message.RefreshError -> showErrorMessage(it.msg, it)
+                is Message.LoadError -> showErrorMessage(it)
+                is Message.LoadNextError -> showErrorMessage(it)
+                is Message.RefreshError -> showErrorMessage(it)
             }
         })
     }
@@ -98,7 +98,8 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         activity?.showSnack(MessageBundle(text))
     }
 
-    override fun showErrorMessage(text: String, message: Message) {
+    override fun showErrorMessage(message: Message) {
+        val text = getString(R.string.server_error)
         val action = MessageBundle.Action(getString(R.string.retry), View.OnClickListener {
             viewModel.retry(message)
         })

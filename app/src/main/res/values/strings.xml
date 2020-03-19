@@ -23,4 +23,5 @@
     <string name="movies_favorite_toolbar_title">Favorite Movies</string>
     <string name="cancel_add_to_favorites">Cancel</string>
     <string name="retry">Retry</string>
+    <string name="server_error">Server is temporarily unavailable</string>
 </resources>

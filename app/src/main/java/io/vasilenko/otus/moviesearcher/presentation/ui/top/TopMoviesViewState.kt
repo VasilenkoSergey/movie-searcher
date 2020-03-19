@@ -9,9 +9,9 @@ data class TopMoviesViewState(
 )
 
 sealed class Message {
-    class LoadError(val msg: String) : Message()
-    class LoadNextError(val msg: String) : Message()
-    class RefreshError(val msg: String) : Message()
+    object LoadError : Message()
+    object LoadNextError : Message()
+    object RefreshError : Message()
     class AddToFavorite(val movie: MovieModel) : Message()
     object FavoriteExist : Message()
 }
