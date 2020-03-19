@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,7 +29,6 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     private var isLoading = false
 
-    private lateinit var progressBar: ProgressBar
     private lateinit var topMoviesAdapter: TopMoviesAdapter
 
     override fun onCreateView(
@@ -73,7 +71,7 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     override fun showLoading(state: Boolean) {
         isLoading = state
-        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        topMoviesProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun showTopMovies(movies: List<MovieModel>) {
@@ -113,7 +111,6 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
 
     private fun setupViews() {
         topMoviesToolbar.title = getString(R.string.movies_top_toolbar_title)
-        progressBar = topMoviesProgressBar
         topMoviesAdapter =
             TopMoviesAdapter(
                 { movie -> movieOpenClickListener(movie) },
