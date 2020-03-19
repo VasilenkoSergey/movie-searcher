@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.vasilenko.otus.moviesearcher.MovieSearcherApp
 import io.vasilenko.otus.moviesearcher.R
+import io.vasilenko.otus.moviesearcher.core.ext.showSnack
 import io.vasilenko.otus.moviesearcher.presentation.common.ItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.common.MessageBundle
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
@@ -89,19 +90,19 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
             MessageBundle.Action(getString(R.string.cancel_add_to_favorites), View.OnClickListener {
                 viewModel.deleteFromFavorites(movie)
             })
-        router.onMessage(MessageBundle(text, action))
+        activity?.showSnack(MessageBundle(text, action))
     }
 
     override fun showMessageIfMovieExistInFavorites() {
         val text = getString(R.string.already_favorite)
-        router.onMessage(MessageBundle(text))
+        activity?.showSnack(MessageBundle(text))
     }
 
     override fun showErrorMessage(text: String, message: Message) {
         val action = MessageBundle.Action(getString(R.string.retry), View.OnClickListener {
             viewModel.retry(message)
         })
-        router.onMessage(MessageBundle(text, action))
+        activity?.showSnack(MessageBundle(text, action))
     }
 
     override fun scrollToPosition(position: Int) {
