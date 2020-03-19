@@ -16,7 +16,6 @@ import io.vasilenko.otus.moviesearcher.presentation.common.ItemDecoration
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.ui.details.MovieDetailsFragment
-import io.vasilenko.otus.moviesearcher.presentation.ui.details.MovieDetailsViewModel
 import io.vasilenko.otus.moviesearcher.presentation.view.FavoriteMoviesView
 import kotlinx.android.synthetic.main.fragment_favorite_movies.*
 
@@ -27,7 +26,6 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesView {
 
     private lateinit var viewModel: FavoriteMoviesViewModel
     private lateinit var favoriteMoviesAdapter: FavoriteMoviesAdapter
-    private lateinit var detailsViewModel: MovieDetailsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,8 +41,6 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesView {
         factory = MovieSearcherApp.favoriteMoviesViewModelFactory
         viewModel =
             ViewModelProvider(requireActivity(), factory).get(FavoriteMoviesViewModel::class.java)
-        detailsViewModel =
-            ViewModelProvider(requireActivity()).get(MovieDetailsViewModel::class.java)
         setupViews()
 
         viewModel.movies.observe(viewLifecycleOwner, Observer { showFavoriteMovies(it.orEmpty()) })
@@ -96,8 +92,10 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesView {
     }
 
     private fun movieClickListener(movie: MovieModel) {
-        detailsViewModel.setDetails(movie)
-        router.onOpenFragment(MovieDetailsFragment(), addToBackStack = true, showNavBar = false)
+        val bundle = Bundle()
+        bundle.putParcelable("movie", movie)
+        val movieDetailsFragment = MovieDetailsFragment.newInstance(args = bundle)
+        router.onOpenFragment(movieDetailsFragment, addToBackStack = true, showNavBar = false)
     }
 
     private fun showEmptyPlaceHolder() {

@@ -18,7 +18,6 @@ import io.vasilenko.otus.moviesearcher.presentation.common.MessageBundle
 import io.vasilenko.otus.moviesearcher.presentation.model.MovieModel
 import io.vasilenko.otus.moviesearcher.presentation.navigation.MoviesRouter
 import io.vasilenko.otus.moviesearcher.presentation.ui.details.MovieDetailsFragment
-import io.vasilenko.otus.moviesearcher.presentation.ui.details.MovieDetailsViewModel
 import io.vasilenko.otus.moviesearcher.presentation.view.TopMoviesView
 import kotlinx.android.synthetic.main.fragment_top_movies.*
 
@@ -27,7 +26,6 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
     lateinit var router: MoviesRouter
     lateinit var factory: ViewModelProvider.Factory
     private lateinit var viewModel: TopMoviesViewModel
-    private lateinit var detailsViewModel: MovieDetailsViewModel
 
     private var isLoading = false
 
@@ -48,8 +46,6 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
         factory = MovieSearcherApp.topMoviesViewModelFactory
         viewModel =
             ViewModelProvider(requireActivity(), factory).get(TopMoviesViewModel::class.java)
-        detailsViewModel =
-            ViewModelProvider(requireActivity()).get(MovieDetailsViewModel::class.java)
         setupViews()
         viewModel.onViewCreated()
         viewModel.viewState.observe(viewLifecycleOwner, Observer { handleViewState(it) })
@@ -158,8 +154,10 @@ class TopMoviesFragment : Fragment(), TopMoviesView {
     }
 
     private fun movieOpenClickListener(movie: MovieModel) {
-        detailsViewModel.setDetails(movie)
-        router.onOpenFragment(MovieDetailsFragment(), addToBackStack = true, showNavBar = false)
+        val bundle = Bundle()
+        bundle.putParcelable("movie", movie)
+        val movieDetailsFragment = MovieDetailsFragment.newInstance(args = bundle)
+        router.onOpenFragment(movieDetailsFragment, addToBackStack = true, showNavBar = false)
     }
 
     private fun movieAddToFavoriteClickListener(movie: MovieModel) {
