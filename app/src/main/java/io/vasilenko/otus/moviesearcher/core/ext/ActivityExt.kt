@@ -12,7 +12,7 @@ fun Activity.showSnack(messageBundle: MessageBundle) {
         Snackbar.LENGTH_SHORT
     )
     messageBundle.action?.let {
-        snackbar.setAction(messageBundle.action.name, messageBundle.action.listener).show()
+        snackbar.setAction(messageBundle.action.name, messageBundle.action.listener)
     }
     snackbar.show()
 }
