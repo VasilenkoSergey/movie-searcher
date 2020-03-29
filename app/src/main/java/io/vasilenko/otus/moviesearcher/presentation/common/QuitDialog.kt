@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui.dialog
+package io.vasilenko.otus.moviesearcher.presentation.common
 
 import android.app.Dialog
 import android.content.Context

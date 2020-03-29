@@ -23,4 +23,6 @@
     <string name="sample_movie_title">Название</string>
     <string name="sample_toolbar_title">Название</string>
     <string name="sample_movie_description">Описание</string>
+    <string name="retry">Повторить</string>
+    <string name="server_error">Сервер временно недоступен</string>
 </resources>

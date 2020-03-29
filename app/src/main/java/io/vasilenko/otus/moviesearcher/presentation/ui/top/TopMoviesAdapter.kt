@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui.adapter
+package io.vasilenko.otus.moviesearcher.presentation.ui.top
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +18,9 @@ class TopMoviesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_top_movie, parent, false)
-        return ViewHolder(v)
+        return ViewHolder(
+            v
+        )
     }
 
     override fun getItemCount() = movies.size

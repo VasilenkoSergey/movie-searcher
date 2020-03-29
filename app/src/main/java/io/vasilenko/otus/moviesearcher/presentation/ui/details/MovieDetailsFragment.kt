@@ -1,4 +1,4 @@
-package io.vasilenko.otus.moviesearcher.presentation.ui.fragment
+package io.vasilenko.otus.moviesearcher.presentation.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
